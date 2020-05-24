@@ -99,6 +99,16 @@ const setCookie = (project_id, id) => {
     return user;
 };
 
+const userObj = (arrObj) => {
+    let user = {
+        id: arrObj[0].id,
+        first: arrObj[0].first,
+        last: arrObj[0].last,
+        image: arrObj[0].image,
+    };
+    return user;
+};
+
 // GET /welcome
 
 app.get("/welcome", (req, res) => {
@@ -141,16 +151,13 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     let { email, password } = req.body;
-    let data;
-    try {
-        try {
-            data = await db.login(email);
-        } catch (err) {
-            console.log("Error in db.login: ", err);
-            res.json({ noMail: true });
-        }
+    let data = await db.login(email);
+
+    if (!data.rows.length) {
+        res.json({ noMail: true });
+    } else {
         let databasePw = data.rows[0].password;
-        let matchValue = compare(password, databasePw);
+        let matchValue = await compare(password, databasePw);
         if (matchValue) {
             // set user cookie with projectId and userId
             req.session.user = setCookie(
@@ -159,12 +166,14 @@ app.post("/login", async (req, res) => {
             );
             res.json({ success: true });
         } else {
-            res.json({ wrongPassword: true });
+            res.json({ success: false });
         }
-    } catch (err) {
-        console.log("Error in POST /login: ", err);
-        res.json({ success: false });
     }
+});
+
+app.get("/user", async (req, res) => {
+    const { rows } = await db.getUser(req.session.user.userId);
+    res.json(userObj(rows));
 });
 
 // GET /

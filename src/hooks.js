@@ -8,7 +8,7 @@ export function useAuthSubmit(path, fields) {
         axios
             .post(path, fields)
             .then(({ data }) =>
-                data.success ? location.replace("/") : setError(true)
+                data.success ? location.replace("/") : setError(data)
             );
     }
     return [error, submit];
