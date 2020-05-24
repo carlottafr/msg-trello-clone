@@ -50,13 +50,13 @@ app.use(function (req, res, next) {
 
 app.use(express.static("./public"));
 
-// Parse request body
+// parses the req.body
 
 app.use(express.json());
 
-// Upload sent files to my
+// Image upload boilerplate start v
+// will upload sent files to my
 // hard drive in a folder called /uploads
-// and delete them in s3.js
 
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -91,18 +91,10 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-// GET /
-
-app.get("*", (req, res) => {
-    if (!req.session.userId) {
-        res.redirect("/welcome");
-    } else {
-        res.sendFile(__dirname + "/index.html");
-    }
+app.get("*", function (req, res) {
+    res.sendFile(__dirname + "/index.html");
 });
-// app is switched for server so that non-socket requests
-// are handled by app (Express server), and socket requests
-// are handled by the Node server
-server.listen(8080, function () {
+
+app.listen(8080, function () {
     console.log("I'm listening.");
 });
