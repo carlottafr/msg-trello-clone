@@ -91,8 +91,90 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+const setCookie = (project_id, id) => {
+    let user = {
+        projectId: project_id,
+        userId: id,
+    };
+    return user;
+};
+
+// GET /welcome
+
+app.get("/welcome", (req, res) => {
+    if (req.session.user) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+        // ^ renders the welcome component
+    }
+});
+
+// POST /register
+
+app.post("/register", async (req, res) => {
+    let { project, first, last, email, password } = req.body;
+    try {
+        let hashedPw = await hash(password);
+        // create access code to project board
+        let secretCode = cryptoRandomString({
+            length: 12,
+        });
+        const data = await db.registerProject(project, email, secretCode);
+        const { rows } = await db.registerUser(
+            data.rows[0].id,
+            first,
+            last,
+            email,
+            hashedPw
+        );
+        // set user cookie with projectId and userId
+        req.session.user = setCookie(data.rows[0].id, rows[0].id);
+        res.json({ success: true });
+    } catch (err) {
+        console.log("Error in POST /register: ", err);
+        res.json({ success: false });
+    }
+});
+
+// POST /login
+
+app.post("/login", async (req, res) => {
+    let { email, password } = req.body;
+    let data;
+    try {
+        try {
+            data = await db.login(email);
+        } catch (err) {
+            console.log("Error in db.login: ", err);
+            res.json({ noMail: true });
+        }
+        let databasePw = data.rows[0].password;
+        let matchValue = compare(password, databasePw);
+        if (matchValue) {
+            // set user cookie with projectId and userId
+            req.session.user = setCookie(
+                data.rows[0].project_id,
+                data.rows[0].id
+            );
+            res.json({ success: true });
+        } else {
+            res.json({ wrongPassword: true });
+        }
+    } catch (err) {
+        console.log("Error in POST /login: ", err);
+        res.json({ success: false });
+    }
+});
+
+// GET /
+
 app.get("*", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
+    if (!req.session.user) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 app.listen(8080, function () {
