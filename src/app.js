@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 // import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getUser, getProjectInfo } from "./actions";
-import Header from "./header";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, getTeam, getProjectInfo } from "./actions";
+import Nav from "./nav";
 import Board from "./board";
 import Ticket from "./ticket";
 
 export default function App() {
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getUser());
+        dispatch(getTeam());
         dispatch(getProjectInfo());
     }, []);
+
     return (
-        <div>
-            <Header />
+        <div className="body">
+            <Nav />
             <BrowserRouter>
                 <Route exact path="/" render={() => <Board />} />
                 <Route

@@ -173,11 +173,18 @@ app.post("/login", async (req, res) => {
     }
 });
 
-//////////////////// GET /user////////////////////
+//////////////////// GET /user ////////////////////
 
 app.get("/user", async (req, res) => {
     const { rows } = await db.getUser(req.session.user.userId);
     res.json(userObj(rows));
+});
+
+//////////////////// GET /team ////////////////////
+
+app.get("/team", async (req, res) => {
+    const { rows } = await db.getTeam(req.session.user.projectId);
+    res.json(rows);
 });
 
 //////////////////// GET /project-info ////////////////////
@@ -194,13 +201,24 @@ app.get("/project", async (req, res) => {
     res.json(rows);
 });
 
+//////////////////// POST /add-ticket ////////////////////
+
+app.post("/add-ticket", async (req, res) => {
+    let { title } = req.body;
+    console.log("Title: ", title);
+    const { rows } = await db.addTicket(
+        req.session.user.projectId,
+        req.session.user.userId,
+        title
+    );
+    res.json(rows);
+});
+
 //////////////////// GET /ticket ////////////////////
 
 app.get("/api/ticket/:id", async (req, res) => {
     let { id } = req.params;
-    console.log("Index.js id: ", id);
     const { rows } = await db.getTicket(req.session.user.projectId, id);
-    console.log("rows: ", rows);
     rows[0].created_at = showTime(rows[0].created_at);
     res.json(rows);
 });

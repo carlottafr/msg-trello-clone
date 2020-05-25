@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProject } from "./actions";
+import { getProject, addTicket } from "./actions";
 
 export default function Board() {
     const dispatch = useDispatch();
+    const [newTicket, setNewTicket] = useState(false);
 
     useEffect(() => {
         dispatch(getProject());
-    }, [projectTickets]);
+    }, [stageOne, stageTwo, stageThree, stageFour, stageFive, stageSix]);
 
     const stageOne = useSelector(
         (state) =>
@@ -49,8 +50,33 @@ export default function Board() {
 
     const projectTickets = useSelector((state) => state && state.tickets);
 
+    const keyCheck = (e) => {
+        if (e.key === "Enter") {
+            // prevent jumping to the next line
+            e.preventDefault();
+            dispatch(addTicket(e.target.value));
+            setNewTicket(false);
+        }
+    };
+
     return (
         <div className="board">
+            <div
+                className="add-ticket"
+                onClick={() => {
+                    setNewTicket(true);
+                }}
+            >
+                Add a ticket
+            </div>
+            {newTicket && (
+                <div className="ticket-textarea">
+                    <textarea
+                        placeholder="Add the ticket title and press enter"
+                        onKeyDown={(e) => keyCheck(e)}
+                    />
+                </div>
+            )}
             <div className="stage-container">
                 <div className="stage-column">
                     <div className="stage-title">Initiation</div>

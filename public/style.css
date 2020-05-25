@@ -3,13 +3,42 @@ body {
     overflow: hidden;
 }
 
+.add-ticket {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center right;
+}
+
+.board {
+    margin-top: 20px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+}
+
 .modal {
+    background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.6);
+    bottom: 0;
+}
+
+.nav {
+    height: 100vh;
+    max-width: 30%;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .stage-container div {
@@ -29,7 +58,26 @@ body {
     border-radius: 0.7em;
     padding: 10px;
 }
+
+#bmenu {
+    height: 30px;
+}
+
+#bmenu,
+#close {
+    cursor: pointer;
+}
+
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
+    .nav {
+        width: 250px;
+    }
+
+    .nav .avatar {
+        width: 100px;
+        height: 100px;
+    }
+
     .stage-container {
         display: grid;
         grid-template-columns: repeat(6, 200px);

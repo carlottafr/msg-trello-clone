@@ -8,6 +8,14 @@ export async function getUser() {
     };
 }
 
+export async function getTeam() {
+    const { data } = await axios.get("/team");
+    return {
+        type: "GET_TEAM_MEMBERS",
+        team: data,
+    };
+}
+
 export async function getProjectInfo() {
     const { data } = await axios.get("/project-info");
     return {
@@ -26,9 +34,25 @@ export async function getProject() {
 
 export async function getTicket(id) {
     const { data } = await axios.get("/api/ticket/" + id);
-    console.log("Action data: ", data);
     return {
         type: "GET_TICKET_INFO",
         ticket: data,
+    };
+}
+
+export async function addTicket(title) {
+    console.log("Title: ", title);
+    const { data } = await axios.post("/add-ticket", { title });
+    return {
+        type: "ADD_TICKET",
+        ticket: data,
+    };
+}
+
+export async function getMessages(id) {
+    const { data } = await axios.get("/api/messages/" + id);
+    return {
+        type: "GET_TICKET_MESSAGES",
+        messages: data,
     };
 }
