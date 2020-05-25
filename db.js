@@ -28,6 +28,10 @@ module.exports.getUser = (id) => {
     return db.query(`SELECT * FROM users WHERE id = $1;`, [id]);
 };
 
+module.exports.getProjectInfo = (id) => {
+    return db.query(`SELECT * FROM projects WHERE id = $1;`, [id]);
+};
+
 module.exports.getProject = (id) => {
     return db.query(`SELECT * FROM tickets WHERE project_id = $1;`, [id]);
 };
@@ -43,4 +47,48 @@ module.exports.getMessages = (id) => {
         ON (messages.project_id = $1 AND messages.poster_id = users.id);`,
         [id]
     );
+};
+
+module.exports.getTicket = (project_id, id) => {
+    console.log("projectid: ", project_id);
+    console.log("ticketid: ", id);
+    return db.query(
+        `SELECT tickets.creator AS creator, tickets.title AS title, 
+        tickets.ticketnumber AS ticketnumber, tickets.created_at AS created_at, 
+        users.first AS first, users.last AS last, users.image AS image 
+        FROM tickets 
+        JOIN users 
+        ON tickets.creator = users.id 
+        WHERE (tickets.project_id = $1 AND tickets.id = $2);`,
+        [project_id, id]
+    );
+};
+
+module.exports.addTicket = (project_id, title) => {
+    return db
+        .query(
+            `SELECT ticketnumber FROM tickets 
+            WHERE (project_id = $1) 
+            ORDER BY id DESC LIMIT 1;`,
+            [project_id]
+        )
+        .then(({ rows }) => {
+            let ticketnumber;
+            if (rows[0].ticketnumber > 0) {
+                ticketnumber = rows[0].ticketnumber + 1;
+            } else {
+                ticketnumber = 1;
+            }
+            return db.query(
+                `INSERT INTO tickets (project_id, title, ticketnumber) 
+                VALUES ($1, $2, ${ticketnumber}) RETURNING *;`,
+                [project_id, title]
+            );
+        })
+        .then(({ rows }) => {
+            return rows;
+        })
+        .catch((err) => {
+            console.log("Error in addTicket: ", err);
+        });
 };

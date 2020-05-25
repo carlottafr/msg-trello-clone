@@ -91,6 +91,8 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+//////////////////// Helper Functions ////////////////////
+
 const setCookie = (project_id, id) => {
     let user = {
         projectId: project_id,
@@ -109,7 +111,7 @@ const userObj = (arrObj) => {
     return user;
 };
 
-// GET /welcome
+//////////////////// GET /welcome ////////////////////
 
 app.get("/welcome", (req, res) => {
     if (req.session.user) {
@@ -120,7 +122,7 @@ app.get("/welcome", (req, res) => {
     }
 });
 
-// POST /register
+//////////////////// POST /register ////////////////////
 
 app.post("/register", async (req, res) => {
     let { project, first, last, email, password } = req.body;
@@ -147,7 +149,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
-// POST /login
+//////////////////// POST /login ////////////////////
 
 app.post("/login", async (req, res) => {
     let { email, password } = req.body;
@@ -171,9 +173,43 @@ app.post("/login", async (req, res) => {
     }
 });
 
+//////////////////// GET /user////////////////////
+
 app.get("/user", async (req, res) => {
     const { rows } = await db.getUser(req.session.user.userId);
     res.json(userObj(rows));
+});
+
+//////////////////// GET /project-info ////////////////////
+
+app.get("/project-info", async (req, res) => {
+    const { rows } = await db.getProjectInfo(req.session.user.projectId);
+    res.json({ project: rows[0].project });
+});
+
+//////////////////// GET /project ////////////////////
+
+app.get("/project", async (req, res) => {
+    const { rows } = await db.getProject(req.session.user.projectId);
+    res.json(rows);
+});
+
+//////////////////// GET /ticket ////////////////////
+
+app.get("/api/ticket/:id", async (req, res) => {
+    let { id } = req.params;
+    console.log("Index.js id: ", id);
+    const { rows } = await db.getTicket(req.session.user.projectId, id);
+    console.log("rows: ", rows);
+    rows[0].created_at = showTime(rows[0].created_at);
+    res.json(rows);
+});
+
+//////////////////// GET /logout ////////////////////
+
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/welcome");
 });
 
 // GET /

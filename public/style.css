@@ -1,3 +1,54 @@
 body {
     background: linen;
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.stage-container div {
+    border-radius: 0.3em;
+    background: coral;
+}
+
+.stage-container div div {
+    background: linen;
+}
+
+.ticket-container {
+    width: 60%;
+    height: 100vh;
+    background: linen;
+    margin: 0 auto;
+    border-radius: 0.7em;
+    padding: 10px;
+}
+@media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
+    .stage-container {
+        display: grid;
+        grid-template-columns: repeat(6, 200px);
+        overflow-y: auto;
+    }
+
+    .stage-container .stage-column {
+        overflow-y: scroll;
+    }
+
+    .stage-container div {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .stage-container div div {
+        min-height: 0;
+        overflow: hidden;
+        padding: 5px;
+    }
 }
