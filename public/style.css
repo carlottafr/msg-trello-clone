@@ -3,8 +3,13 @@ body {
     overflow: hidden;
 }
 
-.add-ticket {
+.open,
+#bmenu,
+#close {
     cursor: pointer;
+}
+
+.open {
     text-decoration: underline;
 }
 
@@ -61,11 +66,6 @@ body {
 
 #bmenu {
     height: 30px;
-}
-
-#bmenu,
-#close {
-    cursor: pointer;
 }
 
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {

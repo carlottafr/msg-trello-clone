@@ -40,7 +40,11 @@ if (userIsLoggedIn) {
         </Provider>
     );
 } else {
-    elem = <Welcome />;
+    elem = (
+        <Provider store={store}>
+            <Welcome />
+        </Provider>
+    );
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

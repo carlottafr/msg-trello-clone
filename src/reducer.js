@@ -13,7 +13,10 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    if (action.type == "GET_PROJECT_INFO") {
+    if (
+        action.type == "GET_PROJECT_INFO" ||
+        action.type == "GET_PROJECT_CODE"
+    ) {
         state = {
             ...state,
             project: action.project,
@@ -52,6 +55,36 @@ export default function reducer(state = {}, action) {
         state = {
             ...state,
             ticket: action.ticket,
+        };
+    }
+
+    if (action.type == "GET_MESSAGES") {
+        state = {
+            ...state,
+            ticketMessages: action.msgs,
+        };
+    }
+
+    if (action.type == "ADD_NEW_MESSAGE") {
+        state = {
+            ...state,
+            ticketMessages: [...state.ticketMessages, action.msg],
+        };
+    }
+
+    if (action.type == "CHANGE_STAGE") {
+        state = {
+            ...state,
+            tickets: state.tickets.map((ticket) => {
+                if (ticket.id == action.id) {
+                    return {
+                        ...ticket,
+                        stage: action.stage,
+                    };
+                } else {
+                    return ticket;
+                }
+            }),
         };
     }
     console.log(state);

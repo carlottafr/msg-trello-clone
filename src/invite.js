@@ -1,7 +1,8 @@
-import React from "react";
-// import axios from "./axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { HashRouter, Link } from "react-router-dom";
-import { useStatefulFields, useAuthSubmit } from "./hooks";
+import { getProjectWithCode } from "./actions";
+import { useStatefulFieldsInvite, useAuthSubmit } from "./hooks";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -17,21 +18,30 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Registration() {
+export default function Invite(props) {
+    const dispatch = useDispatch();
+    const { code } = props.match.params;
+    useEffect(() => {
+        dispatch(getProjectWithCode(code));
+    }, [project]);
+
+    let project = useSelector((state) => state && state.project);
+
     const classes = useStyles();
-    const [fields, handleChange] = useStatefulFields();
-    const [error, submit] = useAuthSubmit("/register", fields);
+    const [fields, handleChange] = useStatefulFieldsInvite(code);
+    const [error, submit] = useAuthSubmit("/register-invite", fields);
 
     return (
         <div className="welcome">
+            {project && (
+                <div>
+                    <h1>You have been invited to work on {project.project}</h1>
+                    <p>Please register to participate in the board.</p>
+                </div>
+            )}
             <div onChange={handleChange}>
                 {error && <div>Oops, something went wrong!</div>}
                 <div className="data">
-                    <input
-                        name="project"
-                        type="text"
-                        placeholder="Project name"
-                    />
                     <input name="first" type="text" placeholder="First name" />
                     <input name="last" type="text" placeholder="Last name" />
                     <input name="email" type="email" placeholder="Email" />

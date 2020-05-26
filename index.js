@@ -18,7 +18,7 @@ const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const s3 = require("./s3");
-const config = require("./config");
+// const config = require("./config");
 
 app.use(compression());
 
@@ -149,6 +149,23 @@ app.post("/register", async (req, res) => {
     }
 });
 
+//////////////////// POST /register-invite ////////////////////
+
+app.post("/register-invite", async (req, res) => {
+    let { code, first, last, email, password } = req.body;
+    try {
+        const { rows } = await db.getProjectWithCode(code);
+        let id = rows[0].id;
+        let hashedPw = await hash(password);
+        const data = await db.registerUser(id, first, last, email, hashedPw);
+        req.session.user = setCookie(id, data.rows[0].id);
+        res.json({ success: true });
+    } catch (err) {
+        console.log("Error in POST /register-invite: ", err);
+        res.json({ success: false });
+    }
+});
+
 //////////////////// POST /login ////////////////////
 
 app.post("/login", async (req, res) => {
@@ -194,11 +211,44 @@ app.get("/project-info", async (req, res) => {
     res.json({ project: rows[0].project });
 });
 
+//////////////////// GET /project-code ////////////////////
+
+app.post("/project-code", async (req, res) => {
+    let { code } = req.body;
+    console.log("code: ", code);
+    const { rows } = await db.getProjectWithCode(code);
+    res.json(rows[0]);
+});
+
 //////////////////// GET /project ////////////////////
 
 app.get("/project", async (req, res) => {
     const { rows } = await db.getProject(req.session.user.projectId);
     res.json(rows);
+});
+
+//////////////////// POST /invite-member ////////////////////
+
+app.post("/invite-member", async (req, res) => {
+    let { email } = req.body;
+    const { rows } = await db.getProjectInfo(req.session.user.projectId);
+    console.log("Rows: ", rows);
+    let projectName = rows[0].project;
+    let projectCode = rows[0].code;
+    let to = email;
+    let subject = `Invitation to work on ${projectName}`;
+    let text = `Hello, 
+    you have been invited to work on ${projectName}. 
+    Go to this link to register for the project board: 
+    http://localhost:8080/welcome#/${projectCode}`;
+    s3.sendEmail(to, subject, text)
+        .then(() => {
+            res.json({ mailSent: true });
+        })
+        .catch((err) => {
+            console.log("Error in s3.sendEmail: ", err);
+            res.json({ mailSent: false });
+        });
 });
 
 //////////////////// POST /add-ticket ////////////////////
@@ -222,6 +272,16 @@ app.get("/api/ticket/:id", async (req, res) => {
     res.json(rows);
 });
 
+//////////////////// POST /change-stage ////////////////////
+
+app.post("/change-stage", async (req, res) => {
+    let { id, num } = req.body;
+    console.log("id: ", id);
+    console.log("num: ", num);
+    const { rows } = await db.changeStage(id, num);
+    res.json(rows);
+});
+
 //////////////////// GET /logout ////////////////////
 
 app.get("/logout", (req, res) => {
@@ -239,6 +299,55 @@ app.get("*", function (req, res) {
     }
 });
 
-app.listen(8080, function () {
+server.listen(8080, function () {
     console.log("I'm listening.");
+});
+
+//////////////////// Socket setup ////////////////////
+
+io.on("connection", (socket) => {
+    const { userId, projectId } = socket.request.session.user;
+    console.log("userId: ", userId);
+    // check if the user is logged in with
+    // cookie session object
+    // disconnect if not
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+
+    let getMessages = async () => {
+        try {
+            const { rows } = await db.getMessages(projectId);
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].created_at = showTime(rows[i].created_at);
+            }
+            console.log("I'm trying to emit the ticketMessages!");
+            console.log("ticketMessages rows: ", rows);
+            io.sockets.emit("ticketMessages", rows);
+        } catch (err) {
+            console.log("Error in getMessages index.js: ", err);
+        }
+    };
+
+    getMessages();
+
+    // socket.on("getMessages", async (ticketId) => {
+    //     try {
+    //         const { rows } = await db.getMessages(ticketId);
+    //         io.sockets.emit("ticketMessages", rows);
+    //     } catch (err) {
+    //         console.log("Error in socket.on('getMessages'): ", err);
+    //     }
+    // });
+
+    socket.on("newMessage", (ticketId, msg) => {
+        return db
+            .addMessage(userId, ticketId, msg)
+            .then(({ rows }) => {
+                io.sockets.emit("ticketMessage", rows);
+            })
+            .catch((err) => {
+                console.log("Error in socket.on('newMessage'): ", err);
+            });
+    });
 });

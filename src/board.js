@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProject, addTicket } from "./actions";
@@ -6,6 +7,9 @@ import { getProject, addTicket } from "./actions";
 export default function Board() {
     const dispatch = useDispatch();
     const [newTicket, setNewTicket] = useState(false);
+    const [inviteMember, setInviteMember] = useState(false);
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         dispatch(getProject());
@@ -34,12 +38,28 @@ export default function Board() {
             setNewTicket(false);
         }
     };
+
+    const inviteTeamMember = async (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            const { data } = axios.post("/invite-member", {
+                email: e.target.value,
+            });
+            if (data.mailSent) {
+                setSuccess(true);
+            } else {
+                setError(true);
+            }
+            setInviteMember(false);
+        }
+    };
+
     console.log("projectTickets: ", projectTickets);
 
     return (
         <div className="board">
             <div
-                className="add-ticket"
+                className="open"
                 onClick={() => {
                     setNewTicket(true);
                 }}
@@ -47,10 +67,29 @@ export default function Board() {
                 Add a ticket
             </div>
             {newTicket && (
-                <div className="ticket-textarea">
+                <div className="textarea">
                     <textarea
                         placeholder="Add the ticket title and press enter"
                         onKeyDown={(e) => keyCheck(e)}
+                    />
+                </div>
+            )}
+            {success && <div>The invite has been sent out!</div>}
+            {error && <div>Uh oh, something went wrong, please try again!</div>}
+            <div
+                className="open"
+                onClick={() => {
+                    setInviteMember(true);
+                }}
+            >
+                Invite a new team member
+            </div>
+            {inviteMember && (
+                <div>
+                    <input
+                        type="email"
+                        placeholder="Enter the email address press enter"
+                        onKeyDown={(e) => inviteTeamMember(e)}
                     />
                 </div>
             )}
@@ -88,9 +127,9 @@ export default function Board() {
                         ))}
                 </div>
                 <div className="stage-column">
-                    <div className="stage-title">Review</div>
+                    <div className="stage-title">Testing</div>
                     {stageThree && !stageThree.length && (
-                        <div>There are no tickets in review stage.</div>
+                        <div>There are no tickets in testing stage.</div>
                     )}
                     {stageThree &&
                         stageThree.map((ticket) => (
@@ -104,9 +143,9 @@ export default function Board() {
                         ))}
                 </div>
                 <div className="stage-column">
-                    <div className="stage-title">Testing</div>
+                    <div className="stage-title">Implementation</div>
                     {stageFour && !stageFour.length && (
-                        <div>There are no tickets in testing stage.</div>
+                        <div>There are no tickets in implementation stage.</div>
                     )}
                     {stageFour &&
                         stageFour.map((ticket) => (
@@ -120,9 +159,9 @@ export default function Board() {
                         ))}
                 </div>
                 <div className="stage-column">
-                    <div className="stage-title">Implementation</div>
+                    <div className="stage-title">Maintenance</div>
                     {stageFive && !stageFive.length && (
-                        <div>There are no tickets in implementation stage.</div>
+                        <div>There are no tickets in maintenance stage.</div>
                     )}
                     {stageFive &&
                         stageFive.map((ticket) => (
@@ -136,9 +175,9 @@ export default function Board() {
                         ))}
                 </div>
                 <div className="stage-column">
-                    <div className="stage-title">Maintenance</div>
+                    <div className="stage-title">Closed</div>
                     {stageSix && !stageSix.length && (
-                        <div>There are no tickets in maintenance stage.</div>
+                        <div>There are no closed tickets.</div>
                     )}
                     {stageSix &&
                         stageSix.map((ticket) => (

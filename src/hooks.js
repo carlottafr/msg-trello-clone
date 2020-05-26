@@ -25,3 +25,15 @@ export function useStatefulFields() {
     console.log(fields);
     return [fields, handleChange];
 }
+
+export function useStatefulFieldsInvite(code) {
+    const [fields, setFields] = useState({ code });
+    function handleChange({ target }) {
+        setFields({
+            ...fields,
+            [target.name]: target.value,
+        });
+    }
+    console.log("fields: ", fields);
+    return [fields, handleChange];
+}

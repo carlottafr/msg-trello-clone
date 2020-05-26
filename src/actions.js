@@ -16,6 +16,15 @@ export async function getTeam() {
     };
 }
 
+export async function getProjectWithCode(code) {
+    console.log("Actions code: ", code);
+    const { data } = await axios.post("/project-code", { code });
+    return {
+        type: "GET_PROJECT_CODE",
+        project: data,
+    };
+}
+
 export async function getProjectInfo() {
     const { data } = await axios.get("/project-info");
     return {
@@ -32,19 +41,43 @@ export async function getProject() {
     };
 }
 
+export async function addTicket(title) {
+    const { data } = await axios.post("/add-ticket", { title });
+    return {
+        type: "ADD_TICKET",
+        ticket: data,
+    };
+}
+
 export async function getTicket(id) {
     const { data } = await axios.get("/api/ticket/" + id);
+    console.log("Action data: ", data);
     return {
         type: "GET_TICKET_INFO",
         ticket: data,
     };
 }
 
-export async function addTicket(title) {
-    const { data } = await axios.post("/add-ticket", { title });
+export function ticketMessages(msgs) {
     return {
-        type: "ADD_TICKET",
-        ticket: data,
+        type: "GET_MESSAGES",
+        msgs,
+    };
+}
+
+export function ticketMessage(msg) {
+    return {
+        type: "ADD_NEW_MESSAGE",
+        msg,
+    };
+}
+
+export async function changeStage(id, num) {
+    const { data } = await axios.post("/change-stage", { id, num });
+    return {
+        type: "CHANGE_STAGE",
+        id: data[0].id,
+        stage: data[0].stage,
     };
 }
 
