@@ -205,13 +205,12 @@ app.get("/project", async (req, res) => {
 
 app.post("/add-ticket", async (req, res) => {
     let { title } = req.body;
-    console.log("Title: ", title);
-    const { rows } = await db.addTicket(
+    const data = await db.addTicket(
         req.session.user.projectId,
         req.session.user.userId,
         title
     );
-    res.json(rows);
+    res.json(data[0]);
 });
 
 //////////////////// GET /ticket ////////////////////

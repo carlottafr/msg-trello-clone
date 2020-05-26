@@ -44,7 +44,7 @@ export default function reducer(state = {}, action) {
     if (action.type == "ADD_TICKET") {
         state = {
             ...state,
-            tickets: [action.ticket, ...state.tickets],
+            tickets: [...state.tickets, action.ticket],
         };
     }
 

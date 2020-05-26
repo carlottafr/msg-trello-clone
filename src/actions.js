@@ -41,7 +41,6 @@ export async function getTicket(id) {
 }
 
 export async function addTicket(title) {
-    console.log("Title: ", title);
     const { data } = await axios.post("/add-ticket", { title });
     return {
         type: "ADD_TICKET",

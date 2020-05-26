@@ -9,46 +9,22 @@ export default function Board() {
 
     useEffect(() => {
         dispatch(getProject());
-    }, [stageOne, stageTwo, stageThree, stageFour, stageFive, stageSix]);
-
-    const stageOne = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 1)
-    );
-    const stageTwo = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 2)
-    );
-    const stageThree = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 3)
-    );
-    const stageFour = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 4)
-    );
-    const stageFive = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 5)
-    );
-    const stageSix = useSelector(
-        (state) =>
-            state &&
-            state.tickets &&
-            state.tickets.filter((ticket) => ticket.stage == 6)
-    );
+    }, [projectTickets]);
 
     const projectTickets = useSelector((state) => state && state.tickets);
+
+    const stageOne =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 1);
+    const stageTwo =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 2);
+    const stageThree =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 3);
+    const stageFour =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 4);
+    const stageFive =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 5);
+    const stageSix =
+        projectTickets && projectTickets.filter((ticket) => ticket.stage == 6);
 
     const keyCheck = (e) => {
         if (e.key === "Enter") {
@@ -58,6 +34,7 @@ export default function Board() {
             setNewTicket(false);
         }
     };
+    console.log("projectTickets: ", projectTickets);
 
     return (
         <div className="board">
