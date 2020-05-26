@@ -6,9 +6,11 @@ import { getProject, addTicket } from "./actions";
 
 export default function Board() {
     const dispatch = useDispatch();
+    const [addSomething, setAddSomething] = useState(false);
     const [newTicket, setNewTicket] = useState(false);
     const [inviteMember, setInviteMember] = useState(false);
     const [error, setError] = useState(false);
+    const [alreadyMember, setAlreadyMember] = useState(false);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -16,6 +18,7 @@ export default function Board() {
     }, [projectTickets]);
 
     const projectTickets = useSelector((state) => state && state.tickets);
+    const project = useSelector((state) => state && state.project);
 
     const stageOne =
         projectTickets && projectTickets.filter((ticket) => ticket.stage == 1);
@@ -42,15 +45,17 @@ export default function Board() {
     const inviteTeamMember = async (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            const { data } = axios.post("/invite-member", {
+            const { data } = await axios.post("/invite-member", {
                 email: e.target.value,
             });
             if (data.mailSent) {
                 setSuccess(true);
+                setInviteMember(false);
+            } else if (data.alreadyMember) {
+                setAlreadyMember(true);
             } else {
                 setError(true);
             }
-            setInviteMember(false);
         }
     };
 
@@ -58,41 +63,83 @@ export default function Board() {
 
     return (
         <div className="board">
-            <div
-                className="open"
-                onClick={() => {
-                    setNewTicket(true);
-                }}
-            >
-                Add a ticket
+            <div className="header">
+                {project && <h1>{project.project}</h1>}
             </div>
-            {newTicket && (
-                <div className="textarea">
-                    <textarea
-                        placeholder="Add the ticket title and press enter"
-                        onKeyDown={(e) => keyCheck(e)}
-                    />
+            <div className="add">
+                <div
+                    className="open"
+                    onClick={() => {
+                        setAddSomething(!addSomething);
+                    }}
+                >
+                    <img src="/add.png" className="open" />
                 </div>
-            )}
-            {success && <div>The invite has been sent out!</div>}
-            {error && <div>Uh oh, something went wrong, please try again!</div>}
-            <div
-                className="open"
-                onClick={() => {
-                    setInviteMember(true);
-                }}
-            >
-                Invite a new team member
+                {addSomething && (
+                    <div className="add-sth">
+                        <div
+                            className="open"
+                            onClick={() => {
+                                setNewTicket(true);
+                            }}
+                        >
+                            Add a ticket
+                        </div>
+                        {newTicket && (
+                            <div className="textarea">
+                                <input
+                                    type="text"
+                                    placeholder="Add the ticket title and press enter"
+                                    onKeyDown={(e) => keyCheck(e)}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setNewTicket(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
+                        {success && <div>The invite has been sent out!</div>}
+                        {error && (
+                            <div>
+                                Uh oh, something went wrong, please try again!
+                            </div>
+                        )}
+                        {alreadyMember && (
+                            <div>
+                                This email is already registered for this
+                                project!
+                            </div>
+                        )}
+                        <div
+                            className="open"
+                            onClick={() => {
+                                setInviteMember(true);
+                            }}
+                        >
+                            Invite a new team member
+                        </div>
+                        {inviteMember && (
+                            <div>
+                                <input
+                                    type="email"
+                                    placeholder="Enter the email address press enter"
+                                    onKeyDown={(e) => inviteTeamMember(e)}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setInviteMember(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-            {inviteMember && (
-                <div>
-                    <input
-                        type="email"
-                        placeholder="Enter the email address press enter"
-                        onKeyDown={(e) => inviteTeamMember(e)}
-                    />
-                </div>
-            )}
             <div className="stage-container">
                 <div className="stage-column">
                     <div className="stage-title">Initiation</div>

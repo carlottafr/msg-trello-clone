@@ -23,7 +23,7 @@ exports.sendEmail = (to, subject, text) => {
             },
             Message: {
                 Body: {
-                    Text: {
+                    Html: {
                         Data: text,
                     },
                 },

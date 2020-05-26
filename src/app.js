@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 // import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser, getTeam, getProjectInfo } from "./actions";
+import Logo from "./logo";
 import Nav from "./nav";
 import Board from "./board";
 import Ticket from "./ticket";
@@ -18,6 +19,9 @@ export default function App() {
 
     return (
         <div className="body">
+            <div className="header">
+                <Logo />
+            </div>
             <Nav />
             <BrowserRouter>
                 <Route exact path="/" render={() => <Board />} />

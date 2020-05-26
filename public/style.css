@@ -42,7 +42,7 @@ body {
     max-width: 30%;
     background-color: white;
     position: absolute;
-    left: 0;
+    right: 0;
     top: 0;
 }
 
@@ -66,11 +66,53 @@ body {
 
 #bmenu {
     height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
+    .add,
+    .add div,
+    .header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .add,
+    .add div {
+        align-items: center;
+    }
+
+    .add-sth input {
+        width: 300px;
+    }
+
+    .add div {
+        margin-right: 10px;
+    }
+
+    .header {
+        align-items: flex-start;
+    }
+
+    .logo img {
+        height: 30px;
+    }
+
     .nav {
         width: 250px;
+        -webkit-animation: fadein 1s;
+        animation: fadein 1s;
+    }
+
+    @keyframes fadein {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0%);
+        }
     }
 
     .nav .avatar {
@@ -78,13 +120,14 @@ body {
         height: 100px;
     }
 
+    .open img {
+        height: 30px;
+    }
+
     .stage-container {
         display: grid;
         grid-template-columns: repeat(6, 200px);
-        overflow-y: auto;
-    }
-
-    .stage-container .stage-column {
+        max-height: 400px;
         overflow-y: scroll;
     }
 

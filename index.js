@@ -58,27 +58,27 @@ app.use(express.json());
 // will upload sent files to my
 // hard drive in a folder called /uploads
 
-const multer = require("multer");
-const uidSafe = require("uid-safe");
-const path = require("path");
+// const multer = require("multer");
+// const uidSafe = require("uid-safe");
+// const path = require("path");
 
-const diskStorage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, __dirname + "/uploads");
-    },
-    filename: function (req, file, callback) {
-        uidSafe(24).then(function (uid) {
-            callback(null, uid + path.extname(file.originalname));
-        });
-    },
-});
+// const diskStorage = multer.diskStorage({
+//     destination: function (req, file, callback) {
+//         callback(null, __dirname + "/uploads");
+//     },
+//     filename: function (req, file, callback) {
+//         uidSafe(24).then(function (uid) {
+//             callback(null, uid + path.extname(file.originalname));
+//         });
+//     },
+// });
 
-const uploader = multer({
-    storage: diskStorage,
-    limits: {
-        fileSize: 2097152,
-    },
-});
+// const uploader = multer({
+//     storage: diskStorage,
+//     limits: {
+//         fileSize: 2097152,
+//     },
+// });
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -158,6 +158,7 @@ app.post("/register-invite", async (req, res) => {
         let id = rows[0].id;
         let hashedPw = await hash(password);
         const data = await db.registerUser(id, first, last, email, hashedPw);
+        // set user cookie with projectId and userId
         req.session.user = setCookie(id, data.rows[0].id);
         res.json({ success: true });
     } catch (err) {
@@ -208,14 +209,13 @@ app.get("/team", async (req, res) => {
 
 app.get("/project-info", async (req, res) => {
     const { rows } = await db.getProjectInfo(req.session.user.projectId);
-    res.json({ project: rows[0].project });
+    res.json(rows[0]);
 });
 
 //////////////////// GET /project-code ////////////////////
 
 app.post("/project-code", async (req, res) => {
     let { code } = req.body;
-    console.log("code: ", code);
     const { rows } = await db.getProjectWithCode(code);
     res.json(rows[0]);
 });
@@ -231,24 +231,35 @@ app.get("/project", async (req, res) => {
 
 app.post("/invite-member", async (req, res) => {
     let { email } = req.body;
-    const { rows } = await db.getProjectInfo(req.session.user.projectId);
-    console.log("Rows: ", rows);
-    let projectName = rows[0].project;
-    let projectCode = rows[0].code;
-    let to = email;
-    let subject = `Invitation to work on ${projectName}`;
-    let text = `Hello, 
-    you have been invited to work on ${projectName}. 
-    Go to this link to register for the project board: 
-    http://localhost:8080/welcome#/${projectCode}`;
-    s3.sendEmail(to, subject, text)
-        .then(() => {
-            res.json({ mailSent: true });
-        })
-        .catch((err) => {
-            console.log("Error in s3.sendEmail: ", err);
-            res.json({ mailSent: false });
-        });
+    try {
+        const data = await db.checkIfMember(req.session.user.projectId, email);
+        if (data) {
+            res.json({ alreadyMember: true });
+        } else {
+            const { rows } = await db.getProjectInfo(
+                req.session.user.projectId
+            );
+            let projectName = rows[0].project;
+            let projectCode = rows[0].code;
+            let to = email;
+            let subject = `Invitation to work on ${projectName}`;
+            let text = `Hello, 
+            you have been invited to work on ${projectName}. 
+            Go to <a href="http://localhost:8080/welcome#/${projectCode}" 
+            target="_blank">this link</a> to register for the project board.`;
+            s3.sendEmail(to, subject, text)
+                .then(() => {
+                    res.json({ mailSent: true });
+                })
+                .catch((err) => {
+                    console.log("Error in s3.sendEmail: ", err);
+                    res.json({ mailSent: false });
+                });
+        }
+    } catch (err) {
+        console.log("Error in POST /invite-member: ", err);
+        res.json({ mailSent: false });
+    }
 });
 
 //////////////////// POST /add-ticket ////////////////////
@@ -276,8 +287,6 @@ app.get("/api/ticket/:id", async (req, res) => {
 
 app.post("/change-stage", async (req, res) => {
     let { id, num } = req.body;
-    console.log("id: ", id);
-    console.log("num: ", num);
     const { rows } = await db.changeStage(id, num);
     res.json(rows);
 });

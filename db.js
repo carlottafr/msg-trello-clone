@@ -43,6 +43,14 @@ module.exports.getProjectInfo = (id) => {
     return db.query(`SELECT * FROM projects WHERE id = $1;`, [id]);
 };
 
+module.exports.checkIfMember = (project_id, email) => {
+    return db.query(
+        `SELECT * FROM users 
+        WHERE (project_id = $1 AND email = $2);`,
+        [project_id, email]
+    );
+};
+
 module.exports.getProject = (id) => {
     return db.query(`SELECT * FROM tickets WHERE project_id = $1;`, [id]);
 };
@@ -62,7 +70,6 @@ module.exports.addTicket = (project_id, creator, title) => {
             } else {
                 ticketnumber = 1;
             }
-            console.log("ticketnumber: ", ticketnumber);
             return db.query(
                 `INSERT INTO tickets (project_id, creator, title, ticketnumber) 
                 VALUES ($1, $2, $3, ${ticketnumber}) RETURNING *;`,

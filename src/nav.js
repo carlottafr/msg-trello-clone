@@ -4,7 +4,6 @@ import Avatar from "./avatar";
 
 export default function Nav() {
     const [modalVisible, setModal] = useState(false);
-    let project = useSelector((state) => state && state.project);
     let user = useSelector((state) => state && state.user);
 
     useEffect(() => {
@@ -33,7 +32,6 @@ export default function Nav() {
                         >
                             X
                         </div>
-                        {project && <h1>{project.project}</h1>}
                         {user && (
                             <div className="user">
                                 <Avatar avatar={user.image} />
