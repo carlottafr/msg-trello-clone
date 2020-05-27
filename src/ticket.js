@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { socket } from "./socket";
 import { getTicket, changeStage } from "./actions";
 import { Link } from "react-router-dom";
 import Chat from "./chat";
+import setStage from "./stage";
 
 export default function Ticket(props) {
     const [changeState, setChangeState] = useState(false);
@@ -14,6 +16,12 @@ export default function Ticket(props) {
 
     const updateStage = (num) => {
         dispatch(changeStage(ticketId, num));
+        let stage = setStage(num);
+        // write an automatic chat message with the stage change
+        socket.emit("newMessage", {
+            ticketId,
+            msg: `changed the ticket stage to ${stage}.`,
+        });
         setChangeState(false);
     };
 

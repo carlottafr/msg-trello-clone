@@ -32,6 +32,13 @@ module.exports.getUser = (id) => {
     return db.query(`SELECT * FROM users WHERE id = $1;`, [id]);
 };
 
+module.exports.changeAvatar = (id, image) => {
+    return db.query(`UPDATE users SET image = $2 WHERE id = $1 RETURNING *;`, [
+        id,
+        image,
+    ]);
+};
+
 module.exports.getTeam = (project_id) => {
     return db.query(
         `SELECT first, last, image FROM users WHERE project_id = $1;`,
@@ -101,8 +108,8 @@ module.exports.getMessages = (project_id) => {
     return db.query(
         `SELECT messages.id AS id, 
         messages.ticket_id AS ticket_id, messages.text AS text, 
-        messages.created_at AS created_at, users.first AS first, 
-        users.last AS last, users.image AS image 
+        messages.created_at AS created_at, users.id AS user_id, 
+        users.first AS first, users.last AS last, users.image AS image 
         FROM messages 
         JOIN users 
         ON (messages.project_id = $1 AND messages.poster_id = users.id)

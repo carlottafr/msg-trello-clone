@@ -6,6 +6,33 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "TOGGLE_UPLOAD") {
+        state = {
+            ...state,
+            uploadVisible: action.data,
+        };
+    }
+
+    if (action.type == "CHANGE_AVATAR") {
+        state = {
+            ...state,
+            ticketMessages: state.ticketMessages.map((message) => {
+                if (message.user_id == action.id) {
+                    return {
+                        ...message,
+                        image: action.image,
+                    };
+                } else {
+                    return message;
+                }
+            }),
+            user: {
+                ...state.user,
+                image: action.image,
+            },
+        };
+    }
+
     if (action.type == "GET_TEAM_MEMBERS") {
         state = {
             ...state,
@@ -51,13 +78,6 @@ export default function reducer(state = {}, action) {
             ticketMessages: action.msgs,
         };
     }
-
-    // if (action.type == "GET_TICKET_MESSAGES") {
-    //     state = {
-    //         ...state,
-    //         ticketChatMessages: action.msgs,
-    //     };
-    // }
 
     if (action.type == "ADD_NEW_MESSAGE") {
         state = {

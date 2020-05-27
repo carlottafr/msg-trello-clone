@@ -18,7 +18,7 @@ const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const s3 = require("./s3");
-// const config = require("./config");
+const config = require("./config");
 
 app.use(compression());
 
@@ -58,27 +58,27 @@ app.use(express.json());
 // will upload sent files to my
 // hard drive in a folder called /uploads
 
-// const multer = require("multer");
-// const uidSafe = require("uid-safe");
-// const path = require("path");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
 
-// const diskStorage = multer.diskStorage({
-//     destination: function (req, file, callback) {
-//         callback(null, __dirname + "/uploads");
-//     },
-//     filename: function (req, file, callback) {
-//         uidSafe(24).then(function (uid) {
-//             callback(null, uid + path.extname(file.originalname));
-//         });
-//     },
-// });
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
 
-// const uploader = multer({
-//     storage: diskStorage,
-//     limits: {
-//         fileSize: 2097152,
-//     },
-// });
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -196,6 +196,28 @@ app.post("/login", async (req, res) => {
 app.get("/user", async (req, res) => {
     const { rows } = await db.getUser(req.session.user.userId);
     res.json(userObj(rows));
+});
+
+//////////////////// POST /avatar ////////////////////
+
+app.post("/avatar", uploader.single("file"), s3.upload, (req, res) => {
+    let awsUrl = config.s3Url;
+    awsUrl += req.file.filename;
+
+    if (req.file) {
+        return db
+            .changeAvatar(req.session.user.userId, awsUrl)
+            .then(({ rows }) => {
+                res.json(rows);
+            })
+            .catch((err) => {
+                console.log("Error in db.addAvatar: ", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("There is no image!");
+        res.json({ success: false });
+    }
 });
 
 //////////////////// GET /team ////////////////////

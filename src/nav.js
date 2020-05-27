@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleUpload } from "./actions";
 import Avatar from "./avatar";
 
 export default function Nav() {
+    const dispatch = useDispatch();
     const [modalVisible, setModal] = useState(false);
     let user = useSelector((state) => state && state.user);
 
@@ -27,14 +29,21 @@ export default function Nav() {
                             id="close"
                             onClick={() => {
                                 console.log("There was a click!");
-                                setModal(false);
+                                setModal(!modalVisible);
                             }}
                         >
                             X
                         </div>
                         {user && (
                             <div className="user">
-                                <Avatar avatar={user.image} />
+                                <div
+                                    onClick={() => {
+                                        console.log("Trying to open upload");
+                                        dispatch(toggleUpload(true));
+                                    }}
+                                >
+                                    <Avatar avatar={user.image} />
+                                </div>
                                 {user.first} {user.last}
                             </div>
                         )}

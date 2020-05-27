@@ -8,15 +8,17 @@ export default function Chat({ ticketId }) {
         console.log("Chat has mounted/changed!");
     }, [ticketChatMessages]);
 
+    // get the respective ticket's chat messages
     const ticketChatMessages = useSelector(
         (state) =>
             state &&
             state.ticketMessages &&
             state.ticketMessages.filter(
-                (message) => (message.ticket_id = ticketId)
+                (message) => message.ticket_id == ticketId
             )
     );
 
+    // add a message by pressing enter, empty the textarea
     const keyCheck = (e) => {
         if (e.key === "Enter") {
             // prevent jumping to the next line
@@ -25,9 +27,7 @@ export default function Chat({ ticketId }) {
             e.target.value = "";
         }
     };
-    console.log("ticketId: ", ticketId);
 
-    console.log("ticketChatMessages: ", ticketChatMessages);
     return (
         <div className="chat">
             <div className="chatmsg-container">
@@ -35,7 +35,7 @@ export default function Chat({ ticketId }) {
                     placeholder="Add your message here and press enter"
                     onKeyDown={keyCheck}
                 />
-                {!ticketChatMessages && (
+                {ticketChatMessages && !ticketChatMessages.length && (
                     <div>Be the first to write a message!</div>
                 )}
                 {ticketChatMessages &&

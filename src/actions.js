@@ -8,6 +8,24 @@ export async function getUser() {
     };
 }
 
+export async function toggleUpload(data) {
+    return {
+        type: "TOGGLE_UPLOAD",
+        data,
+    };
+}
+
+export async function uploadAvatar(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+    const { data } = await axios.post("/avatar", formData);
+    return {
+        type: "CHANGE_AVATAR",
+        id: data[0].id,
+        image: data[0].image,
+    };
+}
+
 export async function getTeam() {
     const { data } = await axios.get("/team");
     return {
@@ -63,15 +81,6 @@ export function ticketMessages(msgs) {
         msgs,
     };
 }
-
-// export async function ticketChatMessages(ticket_id) {
-//     const { data } = await axios.get("/api/ticket-chatmsgs/" + ticket_id);
-//     console.log("ticketChatMessages action data: ", data);
-//     return {
-//         type: "GET_TICKET_MESSAGES",
-//         msgs: data,
-//     };
-// }
 
 export function ticketMessage(msg) {
     return {

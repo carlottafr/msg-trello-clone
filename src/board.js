@@ -3,6 +3,8 @@ import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProject, addTicket } from "./actions";
+import setStage from "./stage";
+import Upload from "./upload";
 
 export default function Board() {
     const dispatch = useDispatch();
@@ -19,6 +21,7 @@ export default function Board() {
 
     const projectTickets = useSelector((state) => state && state.tickets);
     const project = useSelector((state) => state && state.project);
+    const upload = useSelector((state) => state && state.uploadVisible);
 
     const keyCheck = (e) => {
         if (e.key === "Enter") {
@@ -50,20 +53,7 @@ export default function Board() {
         const stageColumn =
             projectTickets &&
             projectTickets.filter((ticket) => ticket.stage == num);
-        let stage;
-        if (num == 1) {
-            stage = "Initiation";
-        } else if (num == 2) {
-            stage = "In progress";
-        } else if (num == 3) {
-            stage = "Testing";
-        } else if (num == 4) {
-            stage = "Implementation";
-        } else if (num == 5) {
-            stage = "Maintenance";
-        } else {
-            stage = "Closed";
-        }
+        let stage = setStage(num);
 
         return (
             <div className="stage-column">
@@ -180,6 +170,7 @@ export default function Board() {
                 {showBoard(5)}
                 {showBoard(6)}
             </div>
+            {upload && <Upload />}
         </div>
     );
 }

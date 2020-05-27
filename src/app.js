@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser, getTeam, getProjectInfo } from "./actions";
+import Board from "./board";
 import Logo from "./logo";
 import Nav from "./nav";
-import Board from "./board";
 import Ticket from "./ticket";
 
 export default function App() {

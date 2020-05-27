@@ -63,6 +63,11 @@ a {
     background: #ffffe3;
 }
 
+.stage-title {
+    text-align: center;
+    font-weight: 500 !important;
+}
+
 .success {
     -webkit-animation: fadeout 2s;
     animation: fadeout 2s;
@@ -78,14 +83,23 @@ a {
     }
 }
 
-.ticket-container {
+.ticket-container,
+.upload {
     width: 60%;
+}
+
+.ticket-container {
     height: 500px;
     overflow-y: scroll;
     background: linen;
     margin: 0 auto;
     border-radius: 0.7em;
     padding: 10px;
+}
+
+.upload {
+    height: 300px;
+    background: hotpink;
 }
 
 #bmenu {
@@ -112,6 +126,11 @@ a {
         width: 300px;
     }
 
+    .add,
+    .header {
+        margin-left: 10px;
+    }
+
     .add div {
         margin-right: 10px;
     }
@@ -130,6 +149,7 @@ a {
 
     .nav {
         width: 250px;
+        padding: 10px;
         -webkit-animation: fadein 1s;
         animation: fadein 1s;
     }
