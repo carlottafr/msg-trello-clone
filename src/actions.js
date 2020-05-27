@@ -8,6 +8,21 @@ export async function getUser() {
     };
 }
 
+// export async function getAllProjects() {
+//     const { data } = await axios.get("/all-projects");
+//     if (data.noMultipleProjects) {
+//         return {
+//             type: "GET_ALL_PROJECTS",
+//             multipleProjects: false,
+//         };
+//     } else {
+//         return {
+//             type: "GET_ALL_PROJECTS",
+//             multipleProjects: data,
+//         };
+//     }
+// }
+
 export async function toggleUpload(data) {
     return {
         type: "TOGGLE_UPLOAD",

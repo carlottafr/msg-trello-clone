@@ -6,6 +6,13 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    // if (action.type == "GET_ALL_PROJECTS") {
+    //     state = {
+    //         ...state,
+    //         multipleProjects: action.multipleProjects,
+    //     };
+    // }
+
     if (action.type == "TOGGLE_UPLOAD") {
         state = {
             ...state,

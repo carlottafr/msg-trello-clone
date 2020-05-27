@@ -3,6 +3,8 @@ import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProject, addTicket } from "./actions";
+import Footer from "./footer";
+import Logo from "./logo";
 import setStage from "./stage";
 import Upload from "./upload";
 
@@ -40,6 +42,9 @@ export default function Board() {
             });
             if (data.mailSent) {
                 setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 3000);
                 setInviteMember(false);
             } else if (data.alreadyMember) {
                 setAlreadyMember(true);
@@ -57,120 +62,133 @@ export default function Board() {
 
         return (
             <div className="stage-column">
-                <div className="stage-title">{stage}</div>
-                {stageColumn && !stageColumn.length && (
-                    <div>There are no tickets in initiation stage.</div>
-                )}
-                {stageColumn &&
-                    stageColumn.map((ticket) => (
-                        <div key={ticket.id} className="ticket">
-                            <Link to={"/ticket/" + ticket.id}>
-                                <div className="ticket-title">
-                                    #{ticket.ticketnumber} {ticket.title}
-                                </div>
-                                <div className="nr-msgs">
-                                    <img src="/msg.png" />
-                                    {ticket.msgNumber}
-                                </div>
-                            </Link>
+                <div className="stage-inner-container">
+                    <div className="stage-title">{stage}</div>
+                    {stageColumn && !stageColumn.length && (
+                        <div className="no-ticket">
+                            There are no tickets in initiation stage.
                         </div>
-                    ))}
+                    )}
+                    {stageColumn &&
+                        stageColumn.map((ticket) => (
+                            <div key={ticket.id} className="ticket">
+                                <Link to={"/ticket/" + ticket.id}>
+                                    <div className="ticket-title">
+                                        #{ticket.ticketnumber} {ticket.title}
+                                    </div>
+                                    <div className="nr-msgs">
+                                        <img src="/msg.png" />
+                                        {ticket.msgNumber}
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                </div>
             </div>
         );
     };
 
     return (
-        <div className="board">
+        <div className="body">
             <div className="header">
-                {project && <h1>{project.project}</h1>}
-            </div>
-            <div className="add">
-                <div
-                    className="open"
-                    onClick={() => {
-                        setAddSomething(!addSomething);
-                    }}
-                >
-                    <img src="/add.png" className="open" />
-                </div>
-                {addSomething && (
-                    <div className="add-sth">
-                        <div
-                            className="open"
-                            onClick={() => {
-                                setNewTicket(true);
-                            }}
-                        >
-                            Add a ticket
-                        </div>
-                        {newTicket && (
-                            <div className="textarea">
-                                <input
-                                    type="text"
-                                    placeholder="Add the ticket title and press enter"
-                                    onKeyDown={(e) => keyCheck(e)}
-                                />
-                                <button
-                                    onClick={() => {
-                                        setNewTicket(false);
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        )}
-                        <div
-                            className="open"
-                            onClick={() => {
-                                setInviteMember(true);
-                            }}
-                        >
-                            Invite a new team member
-                        </div>
-                        {inviteMember && (
-                            <div>
-                                <input
-                                    type="email"
-                                    placeholder="Enter the email address press enter"
-                                    onKeyDown={(e) => inviteTeamMember(e)}
-                                />
-                                <button
-                                    onClick={() => {
-                                        setInviteMember(false);
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        )}
-                        {success && (
-                            <div className="success">
-                                The invite has been sent out!
-                            </div>
-                        )}
-                        {error && (
-                            <div>
-                                Uh oh, something went wrong, please try again!
-                            </div>
-                        )}
-                        {alreadyMember && (
-                            <div>
-                                This email is already registered for this
-                                project!
-                            </div>
-                        )}
+                <Logo />
+                {project && (
+                    <div className="project-name">
+                        <h1>{project.project}</h1>
                     </div>
                 )}
             </div>
-            <div className="stage-container">
-                {showBoard(1)}
-                {showBoard(2)}
-                {showBoard(3)}
-                {showBoard(4)}
-                {showBoard(5)}
-                {showBoard(6)}
+            <div className="board">
+                <div className="add">
+                    <div
+                        className="open"
+                        onClick={() => {
+                            setAddSomething(!addSomething);
+                        }}
+                    >
+                        <img src="/add.png" className="open" />
+                    </div>
+                    {addSomething && (
+                        <div className="add-sth">
+                            <div
+                                className="open"
+                                onClick={() => {
+                                    setNewTicket(true);
+                                }}
+                            >
+                                Add a ticket
+                            </div>
+                            {newTicket && (
+                                <div className="textarea">
+                                    <input
+                                        type="text"
+                                        placeholder="Add the ticket title and press enter"
+                                        onKeyDown={(e) => keyCheck(e)}
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            setNewTicket(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            )}
+                            <div
+                                className="open"
+                                onClick={() => {
+                                    setInviteMember(true);
+                                }}
+                            >
+                                Invite a new team member
+                            </div>
+                            {inviteMember && (
+                                <div>
+                                    <input
+                                        type="email"
+                                        placeholder="Enter the email address press enter"
+                                        onKeyDown={(e) => inviteTeamMember(e)}
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            setInviteMember(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            )}
+                            {success && (
+                                <div className="success">
+                                    The invite has been sent out!
+                                </div>
+                            )}
+                            {error && (
+                                <div>
+                                    Uh oh, something went wrong, please try
+                                    again!
+                                </div>
+                            )}
+                            {alreadyMember && (
+                                <div>
+                                    This email is already registered for this
+                                    project!
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <div className="stage-container">
+                    {showBoard(1)}
+                    {showBoard(2)}
+                    {showBoard(3)}
+                    {showBoard(4)}
+                    {showBoard(5)}
+                    {showBoard(6)}
+                </div>
+                {upload && <Upload />}
             </div>
-            {upload && <Upload />}
+            <Footer />
         </div>
     );
 }

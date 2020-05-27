@@ -9,15 +9,9 @@ a {
     color: black;
 }
 
-.change-state div,
-.open,
-#bmenu,
-#close {
-    cursor: pointer;
-}
-
-.open {
-    text-decoration: underline;
+.app {
+    display: flex;
+    flex-direction: row;
 }
 
 .avatar {
@@ -26,13 +20,21 @@ a {
     object-position: center right;
 }
 
-.board {
-    margin-top: 20px;
+.change-state div,
+.open,
+#bmenu,
+#close {
+    cursor: pointer;
 }
 
-.body {
-    display: flex;
-    flex-direction: row;
+.chat-inner-container {
+    overflow-y: scroll;
+}
+
+.footer {
+    font-weight: 300;
+    position: absolute;
+    bottom: 5px;
 }
 
 .modal {
@@ -53,19 +55,45 @@ a {
     top: 0;
 }
 
-.stage-container div {
-    border-radius: 0.3em;
-    background: #ffdef2;
-    font-weight: 300;
+.no-ticket,
+.project-name,
+.stage-title,
+.ticket {
+    box-shadow: 0px 3px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-.stage-container div div {
+.no-ticket,
+.stage-title,
+.ticket {
     background: #ffffe3;
 }
 
-.stage-title {
+.open {
+    text-decoration: underline;
+}
+
+.project-name {
+    background: rgb(176, 252, 246);
+    background: linear-gradient(
+        135deg,
+        rgba(176, 252, 246, 1) 0%,
+        rgba(221, 255, 252, 1) 50%,
+        rgba(255, 252, 241, 1) 100%
+    );
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stage-column {
+    font-weight: 300;
+}
+
+.stage-inner-container {
+    background: #ffdef2;
+}
+
+.stage-title,
+.ticket-info {
     text-align: center;
-    font-weight: 500 !important;
 }
 
 .success {
@@ -89,12 +117,18 @@ a {
 }
 
 .ticket-container {
-    height: 500px;
-    overflow-y: scroll;
-    background: linen;
+    background: rgb(242, 226, 255);
+    background: linear-gradient(
+        163deg,
+        rgba(242, 226, 255, 1) 0%,
+        rgba(242, 226, 255, 1) 50%,
+        rgba(255, 250, 231, 1) 100%
+    );
     margin: 0 auto;
-    border-radius: 0.7em;
-    padding: 10px;
+}
+
+.ticket-inner-container {
+    background: white;
 }
 
 .upload {
@@ -135,12 +169,79 @@ a {
         margin-right: 10px;
     }
 
+    .board {
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+
+    .change-state {
+        padding: 10px;
+    }
+
+    .change-state div {
+        width: 200px;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .change-state :last-child {
+        background: #fb8f67;
+        color: white;
+    }
+
+    .change-state #change {
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        transition: all 0.2s ease-in;
+    }
+
+    .change-state #change:hover {
+        transform: scale(1.1);
+        background: white;
+        color: black;
+    }
+
+    .chat-container {
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .chat-container textarea {
+        border: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        width: 97%;
+        height: 30px;
+        padding: 10px;
+        margin: 0 auto;
+        resize: none;
+    }
+
+    .chat-container,
+    .project-name,
+    .stage-container div {
+        border-radius: 10px;
+    }
+
+    .chat-inner-container {
+        height: 200px;
+        padding: 10px;
+    }
+
+    .footer {
+        font-size: 12px;
+    }
+
     .header {
         align-items: flex-start;
     }
 
+    .logo {
+        margin-right: 20px;
+    }
+
     .logo img {
-        height: 30px;
+        height: 70px;
     }
 
     .message-unit .avatar-wrapper .avatar {
@@ -180,13 +281,26 @@ a {
         width: 15px;
     }
 
+    .nr-msgs,
+    .ticket-title {
+        margin: 0 !important;
+    }
+
     .open img {
         height: 30px;
     }
 
+    .project-name {
+        margin-bottom: 10px;
+    }
+
+    .project-name h1 {
+        margin: 15px;
+    }
+
     .stage-container {
         display: grid;
-        grid-template-columns: repeat(6, 200px);
+        grid-template-columns: repeat(6, 205px);
         max-height: 400px;
         overflow-y: scroll;
     }
@@ -194,7 +308,7 @@ a {
     .stage-container div {
         display: flex;
         flex-direction: column;
-        margin: 10px;
+        margin: 5px;
     }
 
     .stage-container div div {
@@ -203,10 +317,49 @@ a {
         padding: 5px;
     }
 
-    .ticket {
-        display: flex;
-        flex-direction: row;
-        padding: 0;
-        margin: 0;
+    .stage-inner-container .no-ticket {
+        padding: 10px;
+    }
+
+    .stage-title {
+        font-weight: 500 !important;
+        margin-bottom: 20px !important;
+    }
+
+    .ticket-container {
+        margin-top: 3%;
+        height: 490px;
+    }
+
+    .ticket-inner-container {
+        margin: 20px;
+        height: 430px;
+    }
+
+    .ticket-container .close {
+        position: fixed;
+        right: 300px;
+        font-weight: lighter;
+        font-size: 12px;
+    }
+
+    .ticket-container .close:hover {
+        font-weight: bold;
+    }
+
+    .ticket-container,
+    .ticket-inner-container {
+        border-radius: 0.7em;
+        padding: 10px;
+    }
+
+    .ticket-created {
+        margin: 10px;
+        font-size: 12px;
+        font-weight: lighter;
+    }
+
+    .ticket-info .open {
+        font-weight: 500;
     }
 }

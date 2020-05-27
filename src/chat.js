@@ -29,31 +29,37 @@ export default function Chat({ ticketId }) {
     };
 
     return (
-        <div className="chat">
-            <div className="chatmsg-container">
-                <textarea
-                    placeholder="Add your message here and press enter"
-                    onKeyDown={keyCheck}
-                />
-                {ticketChatMessages && !ticketChatMessages.length && (
-                    <div>Be the first to write a message!</div>
-                )}
-                {ticketChatMessages &&
-                    ticketChatMessages.map((message) => (
-                        <div key={message.id} className="message-unit">
-                            <Avatar avatar={message.image} />
-                            <div id="name">
-                                {message.first} {message.last}
-                            </div>
-                            <div className="date-msg-container">
-                                <div className="date">{message.created_at}</div>
-                                <div className="message-text">
-                                    {message.text}
+        <div className="chat-container">
+            <div className="chat-inner-container">
+                <div className="chat">
+                    {ticketChatMessages && !ticketChatMessages.length && (
+                        <div className="first-msg">
+                            Be the first to write a message!
+                        </div>
+                    )}
+                    {ticketChatMessages &&
+                        ticketChatMessages.map((message) => (
+                            <div key={message.id} className="message-unit">
+                                <Avatar avatar={message.image} />
+                                <div id="name">
+                                    {message.first} {message.last}
+                                </div>
+                                <div className="date-msg-container">
+                                    <div className="date">
+                                        {message.created_at}
+                                    </div>
+                                    <div className="message-text">
+                                        {message.text}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                </div>
             </div>
+            <textarea
+                placeholder="Add your message here and press enter"
+                onKeyDown={keyCheck}
+            />
         </div>
     );
 }

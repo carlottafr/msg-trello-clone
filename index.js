@@ -198,6 +198,17 @@ app.get("/user", async (req, res) => {
     res.json(userObj(rows));
 });
 
+//////////////////// GET /all-projects ////////////////////
+
+app.get("/all-projects", async (req, res) => {
+    const data = await db.getAllProjects(req.session.user.userId);
+    if (!data) {
+        res.json({ noMultipleProjects: true });
+    } else {
+        res.json(data.rows);
+    }
+});
+
 //////////////////// POST /avatar ////////////////////
 
 app.post("/avatar", uploader.single("file"), s3.upload, (req, res) => {

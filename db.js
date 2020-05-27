@@ -32,6 +32,34 @@ module.exports.getUser = (id) => {
     return db.query(`SELECT * FROM users WHERE id = $1;`, [id]);
 };
 
+// module.exports.getAllProjects = (id) => {
+//     return db
+//         .query(`SELECT email FROM users WHERE id = $1;`, [id])
+//         .then((res) => {
+//             return db
+//                 .query(
+//                     `SELECT * FROM users WHERE email = ${res.rows[0].email};`
+//                 )
+//                 .then(async ({ rows }) => {
+//                     let multipleProjects;
+//                     if (rows.length == 1) {
+//                         multipleProjects = false;
+//                     } else {
+//                         multipleProjects = [];
+//                         for (let i = 0; i < rows.length; i++) {
+//                             let data = await db.query(
+//                                 `SELECT * FROM projects WHERE id = ${rows[i].project_id};`
+//                             );
+//                             data[0].user_id = res.rows[0].id;
+//                             multipleProjects.push(data);
+//                         }
+//                         console.log("multipleProjects: ", multipleProjects);
+//                         return multipleProjects;
+//                     }
+//                 });
+//         });
+// };
+
 module.exports.changeAvatar = (id, image) => {
     return db.query(`UPDATE users SET image = $2 WHERE id = $1 RETURNING *;`, [
         id,
@@ -94,8 +122,9 @@ module.exports.addTicket = (project_id, creator, title) => {
 module.exports.getTicket = (project_id, id) => {
     return db.query(
         `SELECT tickets.creator AS creator, tickets.title AS title, 
-        tickets.ticketnumber AS ticketnumber, tickets.created_at AS created_at, 
-        users.first AS first, users.last AS last, users.image AS image 
+        tickets.ticketnumber AS ticketnumber, tickets.stage AS stage, 
+        tickets.created_at AS created_at, users.first AS first, 
+        users.last AS last, users.image AS image 
         FROM tickets 
         JOIN users 
         ON tickets.creator = users.id 

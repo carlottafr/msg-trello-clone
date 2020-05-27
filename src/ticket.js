@@ -26,60 +26,83 @@ export default function Ticket(props) {
     };
 
     const ticketInfo = useSelector((state) => state && state.ticket);
+    console.log("ticketInfo: ", ticketInfo);
     return (
         <div className="modal">
             <div className="ticket-container">
-                <Link to={"/"}>
-                    <div className="close">X</div>
-                </Link>
-                {ticketInfo &&
-                    ticketInfo.map((ticket) => (
-                        <div key={ticket.ticketnumber}>
-                            <h2>
-                                #{ticket.ticketnumber} {ticket.title}
-                            </h2>
+                <div className="ticket-inner-container">
+                    <Link to={"/"}>
+                        <div className="close">Close</div>
+                    </Link>
+                    {ticketInfo &&
+                        ticketInfo.map((ticket) => (
                             <div
-                                className="open"
-                                onClick={() => {
-                                    setChangeState(true);
-                                }}
+                                key={ticket.ticketnumber}
+                                className="ticket-info"
                             >
-                                Change the stage:
-                            </div>
-                            {changeState && (
-                                <div className="change-state">
-                                    <div>Stage 1: Initiation</div>
-                                    <div onClick={() => updateStage(2)}>
-                                        Stage 2: In progress
-                                    </div>
-                                    <div onClick={() => updateStage(3)}>
-                                        Stage 3: Testing
-                                    </div>
-                                    <div onClick={() => updateStage(4)}>
-                                        Stage 4: Implementation
-                                    </div>
-                                    <div onClick={() => updateStage(5)}>
-                                        Stage 5: Maintenance
-                                    </div>
-                                    <div onClick={() => updateStage(6)}>
-                                        Stage 6: Closed
-                                    </div>
-                                    <div
-                                        onClick={() => {
-                                            setChangeState(false);
-                                        }}
-                                    >
-                                        Cancel
-                                    </div>
+                                <h2>
+                                    #{ticket.ticketnumber} {ticket.title}
+                                </h2>
+                                <div className="ticket-created">
+                                    {ticket.first} {ticket.last} created this
+                                    ticket on {ticket.created_at}.
                                 </div>
-                            )}
-                            <div>
-                                {ticket.first} {ticket.last} created this ticket
-                                on {ticket.created_at}.
+                                <div
+                                    className="open"
+                                    onClick={() => {
+                                        setChangeState(!changeState);
+                                    }}
+                                >
+                                    Change the stage:
+                                </div>
+                                {changeState && (
+                                    <div className="change-state">
+                                        <div id="change">
+                                            Stage 1: Initiation
+                                        </div>
+                                        <div
+                                            id="change"
+                                            onClick={() => updateStage(2)}
+                                        >
+                                            Stage 2: In progress
+                                        </div>
+                                        <div
+                                            id="change"
+                                            onClick={() => updateStage(3)}
+                                        >
+                                            Stage 3: Testing
+                                        </div>
+                                        <div
+                                            id="change"
+                                            onClick={() => updateStage(4)}
+                                        >
+                                            Stage 4: Implementation
+                                        </div>
+                                        <div
+                                            id="change"
+                                            onClick={() => updateStage(5)}
+                                        >
+                                            Stage 5: Maintenance
+                                        </div>
+                                        <div
+                                            id="change"
+                                            onClick={() => updateStage(6)}
+                                        >
+                                            Stage 6: Closed
+                                        </div>
+                                        <div
+                                            onClick={() => {
+                                                setChangeState(!changeState);
+                                            }}
+                                        >
+                                            Cancel
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                            <Chat ticketId={ticketId} />
-                        </div>
-                    ))}
+                        ))}
+                    <Chat ticketId={ticketId} />
+                </div>
             </div>
         </div>
     );

@@ -28,7 +28,6 @@ export default function Nav() {
                         <div
                             id="close"
                             onClick={() => {
-                                console.log("There was a click!");
                                 setModal(!modalVisible);
                             }}
                         >
@@ -38,7 +37,6 @@ export default function Nav() {
                             <div className="user">
                                 <div
                                     onClick={() => {
-                                        console.log("Trying to open upload");
                                         dispatch(toggleUpload(true));
                                     }}
                                 >
