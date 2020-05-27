@@ -68,7 +68,7 @@ export default function reducer(state = {}, action) {
     if (action.type == "ADD_NEW_MESSAGE") {
         state = {
             ...state,
-            ticketMessages: [...state.ticketMessages, action.msg],
+            ticketMessages: [action.msg, ...state.ticketMessages],
         };
     }
 

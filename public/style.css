@@ -100,6 +100,10 @@ body {
         height: 30px;
     }
 
+    .message-unit .avatar-wrapper .avatar {
+        height: 30px;
+    }
+
     .nav {
         width: 250px;
         -webkit-animation: fadein 1s;

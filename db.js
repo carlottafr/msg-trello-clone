@@ -105,19 +105,20 @@ module.exports.getMessages = (project_id) => {
         users.last AS last, users.image AS image 
         FROM messages 
         JOIN users 
-        ON (messages.project_id = $1 AND messages.poster_id = users.id);`,
+        ON (messages.project_id = $1 AND messages.poster_id = users.id)
+        ORDER BY messages.id DESC;`,
         [project_id]
     );
 };
 
 module.exports.addMessage = (project_id, poster_id, ticket_id, text) => {
     return db
-        .query(`INSERT INTO messages VALUES ($1, $2, $3, $4) RETURNING id;`, [
-            project_id,
-            poster_id,
-            ticket_id,
-            text,
-        ])
+        .query(
+            `INSERT INTO messages 
+        (project_id, poster_id, ticket_id, text) 
+        VALUES ($1, $2, $3, $4) RETURNING id;`,
+            [project_id, poster_id, ticket_id, text]
+        )
         .then(({ rows }) => {
             let id = rows[0].id;
             return db.query(
@@ -129,6 +130,9 @@ module.exports.addMessage = (project_id, poster_id, ticket_id, text) => {
         ON (messages.id = $1 AND messages.poster_id = users.id);`,
                 [id]
             );
+        })
+        .then(({ rows }) => {
+            return rows;
         })
         .catch((err) => {
             console.log("Error in addMessage: ", err);

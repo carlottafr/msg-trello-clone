@@ -316,7 +316,6 @@ server.listen(8080, function () {
 
 io.on("connection", (socket) => {
     const { userId, projectId } = socket.request.session.user;
-    console.log("userId: ", userId);
     // check if the user is logged in with
     // cookie session object
     // disconnect if not
@@ -330,8 +329,6 @@ io.on("connection", (socket) => {
             for (let i = 0; i < rows.length; i++) {
                 rows[i].created_at = showTime(rows[i].created_at);
             }
-            console.log("I'm trying to emit the ticketMessages!");
-            console.log("ticketMessages rows: ", rows);
             io.sockets.emit("ticketMessages", rows);
         } catch (err) {
             console.log("Error in getMessages index.js: ", err);
@@ -349,11 +346,12 @@ io.on("connection", (socket) => {
     //     }
     // });
 
-    socket.on("newMessage", (ticketId, msg) => {
+    socket.on("newMessage", ({ ticketId, msg }) => {
         return db
-            .addMessage(userId, ticketId, msg)
-            .then(({ rows }) => {
-                io.sockets.emit("ticketMessage", rows);
+            .addMessage(projectId, userId, ticketId, msg)
+            .then((data) => {
+                data[0].created_at = showTime(data[0].created_at);
+                io.sockets.emit("ticketMessage", data[0]);
             })
             .catch((err) => {
                 console.log("Error in socket.on('newMessage'): ", err);
