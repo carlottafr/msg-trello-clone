@@ -224,6 +224,11 @@ app.post("/project-code", async (req, res) => {
 
 app.get("/project", async (req, res) => {
     const { rows } = await db.getProject(req.session.user.projectId);
+    // console.log("Project rows: ", rows);
+    for (let i = 0; i < rows.length; i++) {
+        let data = await db.getMessagesWithTicketId(rows[i].id);
+        rows[i].msgNumber = data.rows.length;
+    }
     res.json(rows);
 });
 
@@ -233,7 +238,8 @@ app.post("/invite-member", async (req, res) => {
     let { email } = req.body;
     try {
         const data = await db.checkIfMember(req.session.user.projectId, email);
-        if (data) {
+        if (data.rows.length > 0) {
+            console.log("alreadyMember data: ", data.rows.length);
             res.json({ alreadyMember: true });
         } else {
             const { rows } = await db.getProjectInfo(
@@ -282,6 +288,15 @@ app.get("/api/ticket/:id", async (req, res) => {
     rows[0].created_at = showTime(rows[0].created_at);
     res.json(rows);
 });
+
+//////////////////// GET /ticket-chatmsgs ////////////////////
+
+// app.get("/api/ticket-chatmsgs/:id", async (req, res) => {
+//     let { id } = req.params;
+//     const { rows } = await db.getMessagesWithTicketId(id);
+//     console.log("ticket-chatmsgs rows: ", rows);
+//     res.json(rows);
+// });
 
 //////////////////// POST /change-stage ////////////////////
 
@@ -336,15 +351,6 @@ io.on("connection", (socket) => {
     };
 
     getMessages();
-
-    // socket.on("getMessages", async (ticketId) => {
-    //     try {
-    //         const { rows } = await db.getMessages(ticketId);
-    //         io.sockets.emit("ticketMessages", rows);
-    //     } catch (err) {
-    //         console.log("Error in socket.on('getMessages'): ", err);
-    //     }
-    // });
 
     socket.on("newMessage", ({ ticketId, msg }) => {
         return db

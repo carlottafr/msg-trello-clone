@@ -1,8 +1,15 @@
 body {
-    background: linen;
+    background: #fff;
     overflow: hidden;
+    font-family: "Roboto", sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.change-state div,
 .open,
 #bmenu,
 #close {
@@ -40,7 +47,7 @@ body {
 .nav {
     height: 100vh;
     max-width: 30%;
-    background-color: white;
+    background-color: #e2eeff;
     position: absolute;
     right: 0;
     top: 0;
@@ -48,16 +55,33 @@ body {
 
 .stage-container div {
     border-radius: 0.3em;
-    background: coral;
+    background: #ffdef2;
+    font-weight: 300;
 }
 
 .stage-container div div {
-    background: linen;
+    background: #ffffe3;
+}
+
+.success {
+    -webkit-animation: fadeout 2s;
+    animation: fadeout 2s;
+    opacity: 0;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 .ticket-container {
     width: 60%;
-    height: 100vh;
+    height: 500px;
+    overflow-y: scroll;
     background: linen;
     margin: 0 auto;
     border-radius: 0.7em;
@@ -124,6 +148,18 @@ body {
         height: 100px;
     }
 
+    .nr-msgs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-end;
+        font-size: 12px;
+    }
+
+    .nr-msgs img {
+        width: 15px;
+    }
+
     .open img {
         height: 30px;
     }
@@ -145,5 +181,12 @@ body {
         min-height: 0;
         overflow: hidden;
         padding: 5px;
+    }
+
+    .ticket {
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
     }
 }

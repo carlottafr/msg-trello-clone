@@ -6,9 +6,9 @@ import Avatar from "./avatar";
 export default function Chat({ ticketId }) {
     useEffect(() => {
         console.log("Chat has mounted/changed!");
-    }, [ticketMessages]);
+    }, [ticketChatMessages]);
 
-    const ticketMessages = useSelector(
+    const ticketChatMessages = useSelector(
         (state) =>
             state &&
             state.ticketMessages &&
@@ -25,14 +25,21 @@ export default function Chat({ ticketId }) {
             e.target.value = "";
         }
     };
+    console.log("ticketId: ", ticketId);
 
-    console.log("ticketMessages: ", ticketMessages);
+    console.log("ticketChatMessages: ", ticketChatMessages);
     return (
         <div className="chat">
             <div className="chatmsg-container">
-                {!ticketMessages && <div>Be the first to write a message!</div>}
-                {ticketMessages &&
-                    ticketMessages.map((message) => (
+                <textarea
+                    placeholder="Add your message here and press enter"
+                    onKeyDown={keyCheck}
+                />
+                {!ticketChatMessages && (
+                    <div>Be the first to write a message!</div>
+                )}
+                {ticketChatMessages &&
+                    ticketChatMessages.map((message) => (
                         <div key={message.id} className="message-unit">
                             <Avatar avatar={message.image} />
                             <div id="name">
@@ -47,10 +54,6 @@ export default function Chat({ ticketId }) {
                         </div>
                     ))}
             </div>
-            <textarea
-                placeholder="Add your message here and press enter"
-                onKeyDown={keyCheck}
-            />
         </div>
     );
 }

@@ -23,20 +23,6 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    if (action.type == "OPEN_NAV") {
-        state = {
-            ...state,
-            modalVisible: action.modalVisible,
-        };
-    }
-
-    if (action.type == "CLOSE_NAV") {
-        state = {
-            ...state,
-            modalVisible: action.modalVisible,
-        };
-    }
-
     if (action.type == "GET_PROJECT_TICKETS") {
         state = {
             ...state,
@@ -59,11 +45,19 @@ export default function reducer(state = {}, action) {
     }
 
     if (action.type == "GET_MESSAGES") {
+        console.log("Reducer is at work!");
         state = {
             ...state,
             ticketMessages: action.msgs,
         };
     }
+
+    // if (action.type == "GET_TICKET_MESSAGES") {
+    //     state = {
+    //         ...state,
+    //         ticketChatMessages: action.msgs,
+    //     };
+    // }
 
     if (action.type == "ADD_NEW_MESSAGE") {
         state = {

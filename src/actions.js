@@ -51,7 +51,6 @@ export async function addTicket(title) {
 
 export async function getTicket(id) {
     const { data } = await axios.get("/api/ticket/" + id);
-    console.log("Action data: ", data);
     return {
         type: "GET_TICKET_INFO",
         ticket: data,
@@ -64,6 +63,15 @@ export function ticketMessages(msgs) {
         msgs,
     };
 }
+
+// export async function ticketChatMessages(ticket_id) {
+//     const { data } = await axios.get("/api/ticket-chatmsgs/" + ticket_id);
+//     console.log("ticketChatMessages action data: ", data);
+//     return {
+//         type: "GET_TICKET_MESSAGES",
+//         msgs: data,
+//     };
+// }
 
 export function ticketMessage(msg) {
     return {

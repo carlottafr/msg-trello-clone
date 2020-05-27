@@ -111,6 +111,12 @@ module.exports.getMessages = (project_id) => {
     );
 };
 
+module.exports.getMessagesWithTicketId = (ticket_id) => {
+    return db.query(`SELECT * FROM messages WHERE ticket_id = $1;`, [
+        ticket_id,
+    ]);
+};
+
 module.exports.addMessage = (project_id, poster_id, ticket_id, text) => {
     return db
         .query(

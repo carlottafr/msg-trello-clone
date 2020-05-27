@@ -20,19 +20,6 @@ export default function Board() {
     const projectTickets = useSelector((state) => state && state.tickets);
     const project = useSelector((state) => state && state.project);
 
-    const stageOne =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 1);
-    const stageTwo =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 2);
-    const stageThree =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 3);
-    const stageFour =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 4);
-    const stageFive =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 5);
-    const stageSix =
-        projectTickets && projectTickets.filter((ticket) => ticket.stage == 6);
-
     const keyCheck = (e) => {
         if (e.key === "Enter") {
             // prevent jumping to the next line
@@ -59,7 +46,48 @@ export default function Board() {
         }
     };
 
-    console.log("projectTickets: ", projectTickets);
+    const showBoard = (num) => {
+        const stageColumn =
+            projectTickets &&
+            projectTickets.filter((ticket) => ticket.stage == num);
+        let stage;
+        if (num == 1) {
+            stage = "Initiation";
+        } else if (num == 2) {
+            stage = "In progress";
+        } else if (num == 3) {
+            stage = "Testing";
+        } else if (num == 4) {
+            stage = "Implementation";
+        } else if (num == 5) {
+            stage = "Maintenance";
+        } else {
+            stage = "Closed";
+        }
+
+        return (
+            <div className="stage-column">
+                <div className="stage-title">{stage}</div>
+                {stageColumn && !stageColumn.length && (
+                    <div>There are no tickets in initiation stage.</div>
+                )}
+                {stageColumn &&
+                    stageColumn.map((ticket) => (
+                        <div key={ticket.id} className="ticket">
+                            <Link to={"/ticket/" + ticket.id}>
+                                <div className="ticket-title">
+                                    #{ticket.ticketnumber} {ticket.title}
+                                </div>
+                                <div className="nr-msgs">
+                                    <img src="/msg.png" />
+                                    {ticket.msgNumber}
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+            </div>
+        );
+    };
 
     return (
         <div className="board">
@@ -101,18 +129,6 @@ export default function Board() {
                                 </button>
                             </div>
                         )}
-                        {success && <div>The invite has been sent out!</div>}
-                        {error && (
-                            <div>
-                                Uh oh, something went wrong, please try again!
-                            </div>
-                        )}
-                        {alreadyMember && (
-                            <div>
-                                This email is already registered for this
-                                project!
-                            </div>
-                        )}
                         <div
                             className="open"
                             onClick={() => {
@@ -137,106 +153,32 @@ export default function Board() {
                                 </button>
                             </div>
                         )}
+                        {success && (
+                            <div className="success">
+                                The invite has been sent out!
+                            </div>
+                        )}
+                        {error && (
+                            <div>
+                                Uh oh, something went wrong, please try again!
+                            </div>
+                        )}
+                        {alreadyMember && (
+                            <div>
+                                This email is already registered for this
+                                project!
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
             <div className="stage-container">
-                <div className="stage-column">
-                    <div className="stage-title">Initiation</div>
-                    {stageOne && !stageOne.length && (
-                        <div>There are no tickets in initiation stage.</div>
-                    )}
-                    {stageOne &&
-                        stageOne.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
-                <div className="stage-column">
-                    <div className="stage-title">In Progress</div>
-                    {stageTwo && !stageTwo.length && (
-                        <div>There are no tickets in progress stage.</div>
-                    )}
-                    {stageTwo &&
-                        stageTwo.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
-                <div className="stage-column">
-                    <div className="stage-title">Testing</div>
-                    {stageThree && !stageThree.length && (
-                        <div>There are no tickets in testing stage.</div>
-                    )}
-                    {stageThree &&
-                        stageThree.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
-                <div className="stage-column">
-                    <div className="stage-title">Implementation</div>
-                    {stageFour && !stageFour.length && (
-                        <div>There are no tickets in implementation stage.</div>
-                    )}
-                    {stageFour &&
-                        stageFour.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
-                <div className="stage-column">
-                    <div className="stage-title">Maintenance</div>
-                    {stageFive && !stageFive.length && (
-                        <div>There are no tickets in maintenance stage.</div>
-                    )}
-                    {stageFive &&
-                        stageFive.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
-                <div className="stage-column">
-                    <div className="stage-title">Closed</div>
-                    {stageSix && !stageSix.length && (
-                        <div>There are no closed tickets.</div>
-                    )}
-                    {stageSix &&
-                        stageSix.map((ticket) => (
-                            <div key={ticket.id}>
-                                <Link to={"/ticket/" + ticket.id}>
-                                    <div className="ticket-title">
-                                        #{ticket.ticketnumber} {ticket.title}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
+                {showBoard(1)}
+                {showBoard(2)}
+                {showBoard(3)}
+                {showBoard(4)}
+                {showBoard(5)}
+                {showBoard(6)}
             </div>
         </div>
     );
