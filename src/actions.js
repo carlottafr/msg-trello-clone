@@ -50,7 +50,6 @@ export async function getTeam() {
 }
 
 export async function getProjectWithCode(code) {
-    console.log("Actions code: ", code);
     const { data } = await axios.post("/project-code", { code });
     return {
         type: "GET_PROJECT_CODE",

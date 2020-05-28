@@ -9,25 +9,36 @@ export default function Upload() {
     return (
         <div className="modal">
             <div className="upload">
-                <p id="close" onClick={() => dispatch(toggleUpload(false))}>
-                    X
-                </p>
-                <input
-                    onChange={({ target }) => {
-                        setFile(target.files[0]);
-                    }}
-                    name="file"
-                    type="file"
-                    accept="jpg/*"
-                />
-                <button
-                    onClick={() => {
-                        dispatch(uploadAvatar(file));
-                        dispatch(toggleUpload(false));
-                    }}
+                <p
+                    className="close"
+                    onClick={() => dispatch(toggleUpload(false))}
                 >
-                    Upload
-                </button>
+                    Close
+                </p>
+                <div className="upload-buttons">
+                    <input
+                        onChange={({ target }) => {
+                            setFile(target.files[0]);
+                        }}
+                        name="file"
+                        id="file"
+                        type="file"
+                        accept="jpg/*"
+                        className="inputfile"
+                    />
+                    <label htmlFor="file" className="inputlabel">
+                        Choose
+                    </label>
+                    <div
+                        className="upload-btn"
+                        onClick={() => {
+                            dispatch(uploadAvatar(file));
+                            dispatch(toggleUpload(false));
+                        }}
+                    >
+                        Upload
+                    </div>
+                </div>
             </div>
         </div>
     );

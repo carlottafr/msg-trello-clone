@@ -8,8 +8,6 @@ export default function setStage(num) {
         stage = "Testing";
     } else if (num == 4) {
         stage = "Implementation";
-    } else if (num == 5) {
-        stage = "Maintenance";
     } else {
         stage = "Closed";
     }

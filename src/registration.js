@@ -14,6 +14,7 @@ const useStyles = makeStyles({
         color: "white",
         height: 40,
         padding: "0 20px",
+        margin: "10px",
     },
 });
 
@@ -23,7 +24,7 @@ export default function Registration() {
     const [error, submit] = useAuthSubmit("/register", fields);
 
     return (
-        <div className="welcome">
+        <div className="registration">
             <div onChange={handleChange}>
                 {error && <div>Oops, something went wrong!</div>}
                 <div className="data">
@@ -39,6 +40,11 @@ export default function Registration() {
                         name="password"
                         type="password"
                         placeholder="Password"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                submit();
+                            }
+                        }}
                     />
                     <Button className={classes.root} onClick={submit}>
                         Register

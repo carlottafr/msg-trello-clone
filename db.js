@@ -184,7 +184,7 @@ module.exports.addMessage = (project_id, poster_id, ticket_id, text) => {
 module.exports.changeStage = (id, stage) => {
     return db.query(
         `UPDATE tickets SET stage = $2 
-        WHERE id = $1 RETURNING id;`,
+        WHERE id = $1 RETURNING id, stage;`,
         [id, stage]
     );
 };

@@ -13,6 +13,7 @@ const useStyles = makeStyles({
         color: "white",
         height: 40,
         padding: "0 20px",
+        margin: "10px",
     },
 });
 
@@ -26,24 +27,35 @@ export default function Login() {
     });
 
     return (
-        <div className="data" onChange={handleChange}>
-            {error && error.noMail && (
-                <div>This email has not been registered yet!</div>
-            )}
-            {error && !error.success && (
-                <div>Email or password is incorrect!</div>
-            )}
-            <input name="email" type="email" placeholder="Email" />
-            <input name="password" type="password" placeholder="Password" />
-            <Button className={classes.root} onClick={submit}>
-                Login
-            </Button>
-            <HashRouter>
-                <div>
-                    If you do not have an account yet,{" "}
-                    <Link to="/">register here!</Link>
-                </div>
-            </HashRouter>
+        <div className="login">
+            <div className="data" onChange={handleChange}>
+                {error && error.noMail && (
+                    <div>This email has not been registered yet!</div>
+                )}
+                {error && !error.success && (
+                    <div>Email or password is incorrect!</div>
+                )}
+                <input name="email" type="email" placeholder="Email" />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            submit();
+                        }
+                    }}
+                />
+                <Button className={classes.root} onClick={submit}>
+                    Login
+                </Button>
+                <HashRouter>
+                    <div>
+                        If you do not have an account yet,{" "}
+                        <Link to="/">register here!</Link>
+                    </div>
+                </HashRouter>
+            </div>
         </div>
     );
 }

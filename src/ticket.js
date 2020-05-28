@@ -14,6 +14,27 @@ export default function Ticket(props) {
         dispatch(getTicket(ticketId));
     }, [ticketInfo]);
 
+    let ticketInfo = useSelector((state) => state && state.ticket);
+    let currentStage = ticketInfo && ticketInfo[0].stage;
+
+    // function that lets users change the ticket's
+    // stage only to one that it isn't currently in already
+    const showStages = (num) => {
+        let availableStages = [1, 2, 3, 4, 5];
+        let stagesArray = [];
+        for (let i = 0; i < availableStages.length; i++) {
+            if (availableStages[i] == num) {
+                availableStages.splice(i, 1);
+            }
+            let stage = {
+                stage: availableStages[i],
+                name: setStage(availableStages[i]),
+            };
+            stagesArray.push(stage);
+        }
+        return stagesArray;
+    };
+
     const updateStage = (num) => {
         dispatch(changeStage(ticketId, num));
         let stage = setStage(num);
@@ -25,8 +46,7 @@ export default function Ticket(props) {
         setChangeState(false);
     };
 
-    const ticketInfo = useSelector((state) => state && state.ticket);
-    console.log("ticketInfo: ", ticketInfo);
+    let changeToStages = showStages(currentStage);
     return (
         <div className="modal">
             <div className="ticket-container">
@@ -53,43 +73,22 @@ export default function Ticket(props) {
                                         setChangeState(!changeState);
                                     }}
                                 >
-                                    Change the stage:
+                                    Change the stage
                                 </div>
                                 {changeState && (
                                     <div className="change-state">
-                                        <div id="change">
-                                            Stage 1: Initiation
-                                        </div>
-                                        <div
-                                            id="change"
-                                            onClick={() => updateStage(2)}
-                                        >
-                                            Stage 2: In progress
-                                        </div>
-                                        <div
-                                            id="change"
-                                            onClick={() => updateStage(3)}
-                                        >
-                                            Stage 3: Testing
-                                        </div>
-                                        <div
-                                            id="change"
-                                            onClick={() => updateStage(4)}
-                                        >
-                                            Stage 4: Implementation
-                                        </div>
-                                        <div
-                                            id="change"
-                                            onClick={() => updateStage(5)}
-                                        >
-                                            Stage 5: Maintenance
-                                        </div>
-                                        <div
-                                            id="change"
-                                            onClick={() => updateStage(6)}
-                                        >
-                                            Stage 6: Closed
-                                        </div>
+                                        {changeToStages &&
+                                            changeToStages.map((stage) => (
+                                                <div
+                                                    key={stage.stage}
+                                                    id="change"
+                                                    onClick={() =>
+                                                        updateStage(stage.stage)
+                                                    }
+                                                >
+                                                    {stage.name}
+                                                </div>
+                                            ))}
                                         <div
                                             onClick={() => {
                                                 setChangeState(!changeState);

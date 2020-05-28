@@ -41,15 +41,19 @@ export default function Chat({ ticketId }) {
                         ticketChatMessages.map((message) => (
                             <div key={message.id} className="message-unit">
                                 <Avatar avatar={message.image} />
-                                <div id="name">
-                                    {message.first} {message.last}
-                                </div>
-                                <div className="date-msg-container">
-                                    <div className="date">
-                                        {message.created_at}
+                                <div className="msg-info-wrapper">
+                                    <div className="name-date-container">
+                                        <div className="date">
+                                            {message.created_at}
+                                        </div>
+                                        <p>
+                                            {message.first} {message.last}
+                                        </p>
                                     </div>
-                                    <div className="message-text">
-                                        {message.text}
+                                    <div className="msg-container">
+                                        <div className="message-text">
+                                            {message.text}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

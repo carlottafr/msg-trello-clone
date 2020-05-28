@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { HashRouter, Link } from "react-router-dom";
+// import { HashRouter, Link } from "react-router-dom";
 import { getProjectWithCode } from "./actions";
 import { useStatefulFieldsInvite, useAuthSubmit } from "./hooks";
 import Button from "@material-ui/core/Button";
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
         color: "white",
         height: 40,
         padding: "0 20px",
+        margin: "10px",
     },
 });
 
@@ -32,7 +33,7 @@ export default function Invite(props) {
     const [error, submit] = useAuthSubmit("/register-invite", fields);
 
     return (
-        <div className="welcome">
+        <div className="registration">
             {project && (
                 <div>
                     <h1>You have been invited to work on {project.project}</h1>
@@ -49,17 +50,22 @@ export default function Invite(props) {
                         name="password"
                         type="password"
                         placeholder="Password"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                submit();
+                            }
+                        }}
                     />
                     <Button className={classes.root} onClick={submit}>
                         Register
                     </Button>
                 </div>
-                <HashRouter>
+                {/* <HashRouter>
                     <div id="login">
                         You already have an account?{" "}
                         <Link to="/login">You can log in here!</Link>
                     </div>
-                </HashRouter>
+                </HashRouter> */}
             </div>
         </div>
     );

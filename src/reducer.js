@@ -79,7 +79,6 @@ export default function reducer(state = {}, action) {
     }
 
     if (action.type == "GET_MESSAGES") {
-        console.log("Reducer is at work!");
         state = {
             ...state,
             ticketMessages: action.msgs,

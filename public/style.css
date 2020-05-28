@@ -1,12 +1,56 @@
+* {
+    margin: 0;
+}
+
 body {
     background: #fff;
     overflow: hidden;
+}
+
+body,
+.chat-container textarea {
     font-family: "Roboto", sans-serif;
 }
 
 a {
     text-decoration: none;
     color: black;
+}
+
+.add {
+    box-shadow: 0 4px 4px -4px gray;
+}
+
+.add .open {
+    text-decoration: underline;
+}
+
+.add-sth button {
+    border: none;
+}
+
+.add-sth button,
+.change-state :last-child {
+    background: #fb8f67;
+    color: white;
+}
+
+.add-sth button,
+.inputlabel,
+.no-ticket,
+.project-name,
+.stage-title,
+.ticket,
+.upload-btn,
+.welcome-content {
+    box-shadow: 0px 3px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-sth input,
+.data input,
+.header {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .app {
@@ -20,21 +64,70 @@ a {
     object-position: center right;
 }
 
+.body {
+    /* background: #ffdef2; */
+    background: rgba(255, 222, 242, 0.5);
+}
+
 .change-state div,
+.close,
+.inputlabel,
+.nav .avatar-wrapper .avatar,
+.nav-info .user p,
 .open,
-#bmenu,
-#close {
+.upload-btn,
+#bmenu {
     cursor: pointer;
 }
 
-.chat-inner-container {
+.chat-inner-container,
+.ticket-inner-container {
     overflow-y: scroll;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.error,
+.success {
+    -webkit-animation: fadeout 3s;
+    animation: fadeout 3s;
+    opacity: 0;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 .footer {
     font-weight: 300;
     position: absolute;
-    bottom: 5px;
+    bottom: 3px;
+}
+
+.header,
+.inputlabel,
+.ticket-inner-container,
+.upload-btn,
+.welcome-content {
+    background: white;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
 .modal {
@@ -56,20 +149,9 @@ a {
 }
 
 .no-ticket,
-.project-name,
 .stage-title,
 .ticket {
-    box-shadow: 0px 3px 4px 4px rgba(0, 0, 0, 0.1);
-}
-
-.no-ticket,
-.stage-title,
-.ticket {
-    background: #ffffe3;
-}
-
-.open {
-    text-decoration: underline;
+    background: #ddfffc;
 }
 
 .project-name {
@@ -80,6 +162,7 @@ a {
         rgba(221, 255, 252, 1) 50%,
         rgba(255, 252, 241, 1) 100%
     );
+    background-repeat: no-repeat;
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -88,27 +171,14 @@ a {
 }
 
 .stage-inner-container {
-    background: #ffdef2;
+    background: #fff;
 }
 
+.nav-info .user p,
 .stage-title,
-.ticket-info {
+.ticket-info,
+.welcome-container {
     text-align: center;
-}
-
-.success {
-    -webkit-animation: fadeout 2s;
-    animation: fadeout 2s;
-    opacity: 0;
-}
-
-@keyframes fadeout {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
 }
 
 .ticket-container,
@@ -116,7 +186,8 @@ a {
     width: 60%;
 }
 
-.ticket-container {
+.ticket-container,
+.upload {
     background: rgb(242, 226, 255);
     background: linear-gradient(
         163deg,
@@ -127,13 +198,24 @@ a {
     margin: 0 auto;
 }
 
-.ticket-inner-container {
-    background: white;
+.ticket-inner-container .open {
+    background: #00c49a;
+    color: white;
 }
 
-.upload {
-    height: 300px;
-    background: hotpink;
+.welcome-container {
+    background: rgb(176, 252, 246);
+    background: linear-gradient(
+        135deg,
+        rgba(176, 252, 246, 1) 0%,
+        rgba(221, 255, 252, 1) 50%,
+        rgba(255, 252, 241, 1) 100%
+    );
+    height: 100vh;
+}
+
+.welcome-content {
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #bmenu {
@@ -144,6 +226,10 @@ a {
 }
 
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
+    .add {
+        width: 1120px;
+    }
+
     .add,
     .add div,
     .header {
@@ -156,8 +242,55 @@ a {
         align-items: center;
     }
 
+    .add .open {
+        margin: 5px 5px 5px 0;
+    }
+
+    .add .open img,
+    .change-state #change,
+    .data input {
+        transition: all 0.2s ease-in;
+    }
+
+    .add .open img:hover,
+    .change-state #change:hover,
+    .data input:focus {
+        transform: scale(1.1);
+    }
+
+    .add-sth button,
+    .change-state {
+        padding: 10px;
+    }
+
+    .add-sth button,
+    .change-state :last-child,
+    .chat-container,
+    .inputlabel,
+    .message-unit .msg-info-wrapper,
+    .project-name,
+    .stage-container div,
+    .ticket-inner-container .open,
+    .upload,
+    .upload-btn,
+    .welcome-content {
+        border-radius: 10px;
+    }
+
     .add-sth input {
         width: 300px;
+    }
+
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        margin: 5px;
+    }
+
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        padding: 10px;
     }
 
     .add,
@@ -171,11 +304,7 @@ a {
 
     .board {
         margin-top: 20px;
-        margin-left: 30px;
-    }
-
-    .change-state {
-        padding: 10px;
+        margin-left: 50px;
     }
 
     .change-state div {
@@ -185,55 +314,64 @@ a {
     }
 
     .change-state :last-child {
-        background: #fb8f67;
-        color: white;
+        margin-top: 10px;
     }
 
     .change-state #change {
-        background: rgba(0, 0, 0, 0.3);
-        color: white;
-        transition: all 0.2s ease-in;
-    }
-
-    .change-state #change:hover {
-        transform: scale(1.1);
-        background: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
         color: black;
     }
 
-    .chat-container {
+    .change-state #change:hover {
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    .chat-container,
+    .chat-container textarea {
         border: 1px solid rgba(0, 0, 0, 0.05);
         padding: 10px;
+    }
+
+    .chat-container {
         margin-top: 10px;
     }
 
     .chat-container textarea {
         border: none;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
         width: 97%;
         height: 30px;
-        padding: 10px;
         margin: 0 auto;
         resize: none;
     }
 
-    .chat-container,
-    .project-name,
-    .stage-container div {
-        border-radius: 10px;
-    }
-
     .chat-inner-container {
-        height: 200px;
+        height: 190px;
         padding: 10px;
     }
 
+    .data {
+        width: 50%;
+    }
+
     .footer {
-        font-size: 12px;
+        left: 3px;
+        font-size: 10px;
     }
 
     .header {
         align-items: flex-start;
+        margin: 0;
+        height: 80px;
+        width: 1900px;
+        padding: 10px;
+    }
+
+    .inputlabel,
+    .upload-btn {
+        padding: 15px;
+        width: 50px;
+        margin: 5px;
     }
 
     .logo {
@@ -244,8 +382,32 @@ a {
         height: 70px;
     }
 
+    .message-unit {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        margin: 20px;
+    }
+
     .message-unit .avatar-wrapper .avatar {
-        height: 30px;
+        height: 60px;
+        grid-column: 1 / 2;
+    }
+
+    .message-unit .date {
+        font-size: 12px;
+        font-weight: lighter;
+        text-align: right;
+    }
+
+    .message-unit .name-date-container p,
+    .nav-info .user .username {
+        font-weight: bold;
+    }
+
+    .message-unit .msg-info-wrapper {
+        grid-column: 2 / 3;
+        background: #e2eeff;
+        padding: 10px;
     }
 
     .nav {
@@ -269,16 +431,73 @@ a {
         height: 100px;
     }
 
-    .nr-msgs {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: flex-end;
+    .nav .close,
+    .nav-info .user p,
+    .ticket-container .close,
+    .upload .close {
+        font-weight: lighter;
         font-size: 12px;
+    }
+
+    .nav .close,
+    .ticket-container .close,
+    .upload .close {
+        position: fixed;
+    }
+
+    .nav .close {
+        right: 230px;
+    }
+
+    .nav .close:hover,
+    .ticket-container .close:hover {
+        font-weight: bold;
+    }
+
+    .nav-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .nav-info .logout {
+        text-decoration: underline;
+        font-size: 14px;
+        font-weight: lighter;
+        margin: 30px;
+    }
+
+    .nav-info .user div {
+        margin: 10px;
+    }
+
+    .nav-info .user .username {
+        font-size: 18px !important;
+    }
+
+    .nr-msgs {
+        display: grid;
+        grid-template-rows: 14px;
+        grid-template-columns: 1fr 25px;
+        text-align: right;
+        margin: 10px;
     }
 
     .nr-msgs img {
         width: 15px;
+    }
+
+    .nr-msgs img,
+    .nr-msgs p#msg-nr {
+        grid-row: 1;
+        grid-column: 2 / 3;
+        margin: 5px 0 10px 0;
+    }
+
+    .nr-msgs p#msg-nr {
+        font-size: 12px !important;
     }
 
     .nr-msgs,
@@ -294,31 +513,49 @@ a {
         margin-bottom: 10px;
     }
 
+    .registration h1 {
+        font-size: 16px;
+        margin: 10px;
+    }
+
     .project-name h1 {
         margin: 15px;
     }
 
     .stage-container {
+        margin-top: 10px;
         display: grid;
-        grid-template-columns: repeat(6, 205px);
+        grid-template-columns: repeat(5, 230px);
         max-height: 400px;
         overflow-y: scroll;
     }
 
-    .stage-container div {
+    .stage-container .stage-inner-container {
         display: flex;
         flex-direction: column;
         margin: 5px;
     }
 
-    .stage-container div div {
+    .stage-container .stage-inner-container {
+        padding: 15px;
+    }
+
+    .stage-inner-container .stage-title,
+    .stage-container .no-ticket,
+    .stage-container .ticket {
         min-height: 0;
         overflow: hidden;
-        padding: 5px;
+        padding: 10px;
+        margin: 10px;
     }
 
     .stage-inner-container .no-ticket {
         padding: 10px;
+    }
+
+    .stage-inner-container .no-ticket,
+    .stage-inner-container .ticket {
+        font-size: 14px;
     }
 
     .stage-title {
@@ -337,19 +574,18 @@ a {
     }
 
     .ticket-container .close {
-        position: fixed;
         right: 300px;
-        font-weight: lighter;
-        font-size: 12px;
-    }
-
-    .ticket-container .close:hover {
-        font-weight: bold;
     }
 
     .ticket-container,
     .ticket-inner-container {
         border-radius: 0.7em;
+        padding: 10px;
+    }
+
+    .ticket-inner-container .open {
+        width: 200px;
+        margin: 0 auto;
         padding: 10px;
     }
 
@@ -361,5 +597,45 @@ a {
 
     .ticket-info .open {
         font-weight: 500;
+    }
+
+    .upload {
+        height: 150px;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 20px;
+    }
+
+    .upload .close {
+        right: 500px;
+    }
+
+    .upload-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .welcome-container {
+        padding: 30px;
+    }
+
+    .welcome-container a {
+        text-decoration: underline;
+    }
+
+    .welcome-content {
+        padding: 20px;
+        height: 82%;
+        width: 400px;
+        margin: 0 auto;
+    }
+
+    .welcome-content .logo img {
+        height: 80%;
+        margin-left: 20px;
     }
 }

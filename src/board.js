@@ -78,7 +78,9 @@ export default function Board() {
                                     </div>
                                     <div className="nr-msgs">
                                         <img src="/msg.png" />
-                                        {ticket.msgNumber}
+                                        <p id="msg-nr">
+                                            {ticket.msgNumber || 0}
+                                        </p>
                                     </div>
                                 </Link>
                             </div>
@@ -113,7 +115,7 @@ export default function Board() {
                             <div
                                 className="open"
                                 onClick={() => {
-                                    setNewTicket(true);
+                                    setNewTicket(!newTicket);
                                 }}
                             >
                                 Add a ticket
@@ -127,7 +129,7 @@ export default function Board() {
                                     />
                                     <button
                                         onClick={() => {
-                                            setNewTicket(false);
+                                            setNewTicket(!newTicket);
                                         }}
                                     >
                                         Cancel
@@ -137,7 +139,7 @@ export default function Board() {
                             <div
                                 className="open"
                                 onClick={() => {
-                                    setInviteMember(true);
+                                    setInviteMember(!inviteMember);
                                 }}
                             >
                                 Invite a new team member
@@ -164,13 +166,13 @@ export default function Board() {
                                 </div>
                             )}
                             {error && (
-                                <div>
+                                <div className="error">
                                     Uh oh, something went wrong, please try
                                     again!
                                 </div>
                             )}
                             {alreadyMember && (
-                                <div>
+                                <div className="error">
                                     This email is already registered for this
                                     project!
                                 </div>
@@ -184,7 +186,6 @@ export default function Board() {
                     {showBoard(3)}
                     {showBoard(4)}
                     {showBoard(5)}
-                    {showBoard(6)}
                 </div>
                 {upload && <Upload />}
             </div>

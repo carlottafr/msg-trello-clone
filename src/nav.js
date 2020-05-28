@@ -26,27 +26,32 @@ export default function Nav() {
                 <div className="modal">
                     <div className="nav">
                         <div
-                            id="close"
+                            className="close"
                             onClick={() => {
                                 setModal(!modalVisible);
                             }}
                         >
-                            X
+                            Close
                         </div>
-                        {user && (
-                            <div className="user">
-                                <div
-                                    onClick={() => {
-                                        dispatch(toggleUpload(true));
-                                    }}
-                                >
-                                    <Avatar avatar={user.image} />
+                        <div className="nav-info">
+                            {user && (
+                                <div className="user">
+                                    <div
+                                        onClick={() => {
+                                            dispatch(toggleUpload(true));
+                                        }}
+                                    >
+                                        <Avatar avatar={user.image} />
+                                        <p>Edit your avatar</p>
+                                    </div>
+                                    <p className="username">
+                                        {user.first} {user.last}
+                                    </p>
                                 </div>
-                                {user.first} {user.last}
+                            )}
+                            <div className="logout">
+                                <a href="/logout">Logout</a>
                             </div>
-                        )}
-                        <div>
-                            <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </div>
