@@ -21,6 +21,12 @@ a {
     box-shadow: 0 4px 4px -4px gray;
 }
 
+.add,
+.no-ticket,
+.ticket {
+    background: #f0f6ff;
+}
+
 .add .open {
     text-decoration: underline;
 }
@@ -37,18 +43,18 @@ a {
 
 .add-sth button,
 .inputlabel,
-.no-ticket,
+/* .no-ticket, */
 .project-name,
-.stage-title,
-.ticket,
+.stage-inner-container,
+/* .stage-title, */
+/* .ticket, */
 .upload-btn,
 .welcome-content {
     box-shadow: 0px 3px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-sth input,
-.data input,
-.header {
+.data input {
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -64,10 +70,14 @@ a {
     object-position: center right;
 }
 
-.body {
-    /* background: #ffdef2; */
-    background: rgba(255, 222, 242, 0.5);
+.board {
+    background: #fd7f97;
 }
+
+/* .body {
+    background: #ffdef2;
+    background: rgba(255, 222, 242, 0.5);
+} */
 
 .change-state div,
 .close,
@@ -148,13 +158,7 @@ a {
     top: 0;
 }
 
-.no-ticket,
-.stage-title,
-.ticket {
-    background: #ddfffc;
-}
-
-.project-name {
+/* .project-name {
     background: rgb(176, 252, 246);
     background: linear-gradient(
         135deg,
@@ -162,9 +166,19 @@ a {
         rgba(221, 255, 252, 1) 50%,
         rgba(255, 252, 241, 1) 100%
     );
+    background: rgb(253, 127, 151);
+    background: linear-gradient(
+        163deg,
+        rgba(253, 127, 151, 1) 0%,
+        rgba(255, 216, 223, 1) 50%,
+        rgba(255, 250, 231, 1) 100%
+    );
     background-repeat: no-repeat;
     border: 1px solid rgba(0, 0, 0, 0.05);
-}
+    background: -webkit-linear-gradient(#fd7f97, #f0f6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+} */
 
 .stage-column {
     font-weight: 300;
@@ -172,6 +186,11 @@ a {
 
 .stage-inner-container {
     background: #fff;
+}
+
+.stage-title {
+    color: white;
+    background: #000;
 }
 
 .nav-info .user p,
@@ -188,34 +207,53 @@ a {
 
 .ticket-container,
 .upload {
-    background: rgb(242, 226, 255);
+    /* background: rgb(242, 226, 255);
     background: linear-gradient(
         163deg,
         rgba(242, 226, 255, 1) 0%,
         rgba(242, 226, 255, 1) 50%,
         rgba(255, 250, 231, 1) 100%
+    ); */
+    background: rgb(253, 127, 151);
+    background: linear-gradient(
+        142deg,
+        rgba(253, 127, 151, 1) 0%,
+        rgba(255, 216, 223, 1) 50%,
+        rgba(225, 237, 255, 1) 100%
     );
     margin: 0 auto;
 }
 
-.ticket-inner-container .open {
+.ticket-inner-container .open,
+.welcome-content button {
     background: #00c49a;
     color: white;
 }
 
 .welcome-container {
-    background: rgb(176, 252, 246);
+    background: rgb(253, 127, 151);
+    background: linear-gradient(
+        142deg,
+        rgba(253, 127, 151, 1) 0%,
+        rgba(255, 216, 223, 1) 50%,
+        rgba(225, 237, 255, 1) 100%
+    );
+    /* background: rgb(176, 252, 246);
     background: linear-gradient(
         135deg,
         rgba(176, 252, 246, 1) 0%,
         rgba(221, 255, 252, 1) 50%,
         rgba(255, 252, 241, 1) 100%
-    );
+    ); */
     height: 100vh;
 }
 
 .welcome-content {
     border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.welcome-content button {
+    border: none;
 }
 
 #bmenu {
@@ -227,7 +265,13 @@ a {
 
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
     .add {
-        width: 1120px;
+        width: 1097px;
+        margin-left: 0px !important;
+        padding-left: 53px;
+        border-radius: 20px 20px 0 0;
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
     }
 
     .add,
@@ -246,15 +290,21 @@ a {
         margin: 5px 5px 5px 0;
     }
 
+    .add .open img {
+        opacity: 0.5;
+    }
+
     .add .open img,
     .change-state #change,
-    .data input {
+    .data input,
+    .ticket {
         transition: all 0.2s ease-in;
     }
 
     .add .open img:hover,
     .change-state #change:hover,
-    .data input:focus {
+    .data input:focus,
+    .ticket:hover {
         transform: scale(1.1);
     }
 
@@ -273,7 +323,8 @@ a {
     .ticket-inner-container .open,
     .upload,
     .upload-btn,
-    .welcome-content {
+    .welcome-content,
+    .welcome-content button {
         border-radius: 10px;
     }
 
@@ -302,9 +353,15 @@ a {
         margin-right: 10px;
     }
 
-    .board {
-        margin-top: 20px;
+    .board,
+    .body {
+        border-radius: 30px 30px 0 0;
+    }
+    .body {
+        /* margin-top: 20px; */
+        width: 1150px;
         margin-left: 50px;
+        /* padding: 10px; */
     }
 
     .change-state div {
@@ -477,6 +534,11 @@ a {
         font-size: 18px !important;
     }
 
+    .no-ticket,
+    .ticket {
+        line-height: 1.4em;
+    }
+
     .nr-msgs {
         display: grid;
         grid-template-rows: 14px;
@@ -513,9 +575,13 @@ a {
         margin-bottom: 10px;
     }
 
-    .registration h1 {
-        font-size: 16px;
+    .registration h2 {
+        font-size: 14px;
         margin: 10px;
+    }
+
+    .registration p {
+        font-size: 12px;
     }
 
     .project-name h1 {
@@ -523,11 +589,13 @@ a {
     }
 
     .stage-container {
-        margin-top: 10px;
+        /* margin-top: 10px; */
+        margin-left: 40px;
         display: grid;
-        grid-template-columns: repeat(5, 230px);
+        grid-template-columns: repeat(5, 210px);
         max-height: 400px;
         overflow-y: scroll;
+        padding: 10px;
     }
 
     .stage-container .stage-inner-container {
@@ -583,7 +651,8 @@ a {
         padding: 10px;
     }
 
-    .ticket-inner-container .open {
+    .ticket-inner-container .open,
+    .welcome-content button {
         width: 200px;
         margin: 0 auto;
         padding: 10px;
@@ -634,8 +703,20 @@ a {
         margin: 0 auto;
     }
 
+    .welcome-content button {
+        margin: 10px 0 10px 0;
+    }
+
+    .welcome-content h1 {
+        font-size: 20px;
+    }
+
     .welcome-content .logo img {
-        height: 80%;
+        height: 120px;
         margin-left: 20px;
+    }
+
+    #addon {
+        font-size: 12px;
     }
 }

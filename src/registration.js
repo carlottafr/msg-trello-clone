@@ -2,29 +2,14 @@ import React from "react";
 // import axios from "./axios";
 import { HashRouter, Link } from "react-router-dom";
 import { useStatefulFields, useAuthSubmit } from "./hooks";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-    root: {
-        background: "green",
-        border: 0,
-        borderRadius: 3,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-        color: "white",
-        height: 40,
-        padding: "0 20px",
-        margin: "10px",
-    },
-});
 
 export default function Registration() {
-    const classes = useStyles();
     const [fields, handleChange] = useStatefulFields();
     const [error, submit] = useAuthSubmit("/register", fields);
 
     return (
         <div className="registration">
+            <h1>Get through it together</h1>
             <div onChange={handleChange}>
                 {error && <div>Oops, something went wrong!</div>}
                 <div className="data">
@@ -46,12 +31,12 @@ export default function Registration() {
                             }
                         }}
                     />
-                    <Button className={classes.root} onClick={submit}>
+                    <button className="open" onClick={submit}>
                         Register
-                    </Button>
+                    </button>
                 </div>
                 <HashRouter>
-                    <div id="login">
+                    <div id="addon">
                         You already have an account?{" "}
                         <Link to="/login">You can log in here!</Link>
                     </div>

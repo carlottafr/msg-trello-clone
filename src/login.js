@@ -1,24 +1,8 @@
 import React, { useEffect } from "react";
 import { HashRouter, Link } from "react-router-dom";
 import { useStatefulFields, useAuthSubmit } from "./hooks";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-    root: {
-        background: "green",
-        border: 0,
-        borderRadius: 3,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-        color: "white",
-        height: 40,
-        padding: "0 20px",
-        margin: "10px",
-    },
-});
 
 export default function Login() {
-    const classes = useStyles();
     const [fields, handleChange] = useStatefulFields();
     const [error, submit] = useAuthSubmit("/login", fields);
 
@@ -46,11 +30,11 @@ export default function Login() {
                         }
                     }}
                 />
-                <Button className={classes.root} onClick={submit}>
+                <button className="open" onClick={submit}>
                     Login
-                </Button>
+                </button>
                 <HashRouter>
-                    <div>
+                    <div id="addon">
                         If you do not have an account yet,{" "}
                         <Link to="/">register here!</Link>
                     </div>
