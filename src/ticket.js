@@ -52,7 +52,9 @@ export default function Ticket(props) {
             <div className="ticket-container">
                 <div className="ticket-inner-container">
                     <Link to={"/"}>
-                        <div className="close">Close</div>
+                        <div className="close">
+                            <img src="/close.png" />
+                        </div>
                     </Link>
                     {ticketInfo &&
                         ticketInfo.map((ticket) => (

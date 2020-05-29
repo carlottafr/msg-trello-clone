@@ -31,7 +31,7 @@ export default function Nav() {
                                 setModal(!modalVisible);
                             }}
                         >
-                            Close
+                            <img src="/close.png" />
                         </div>
                         <div className="nav-info">
                             {user && (

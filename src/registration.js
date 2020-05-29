@@ -9,7 +9,7 @@ export default function Registration() {
 
     return (
         <div className="registration">
-            <h1>Get through it together</h1>
+            <h1>Go through it together</h1>
             <div onChange={handleChange}>
                 {error && <div>Oops, something went wrong!</div>}
                 <div className="data">

@@ -43,11 +43,7 @@ a {
 
 .add-sth button,
 .inputlabel,
-/* .no-ticket, */
-.project-name,
 .stage-inner-container,
-/* .stage-title, */
-/* .ticket, */
 .upload-btn,
 .welcome-content {
     box-shadow: 0px 3px 4px 4px rgba(0, 0, 0, 0.1);
@@ -120,7 +116,7 @@ a {
 .footer {
     font-weight: 300;
     position: absolute;
-    bottom: 3px;
+    bottom: 5px;
 }
 
 .header,
@@ -296,6 +292,7 @@ a {
 
     .add .open img,
     .change-state #change,
+    .close img,
     .data input,
     .ticket {
         transition: all 0.2s ease-in;
@@ -315,6 +312,7 @@ a {
 
     .add-sth button,
     .change-state :last-child,
+    .change-state #change:hover,
     .chat-container,
     .inputlabel,
     .message-unit .msg-info-wrapper,
@@ -376,12 +374,12 @@ a {
 
     .change-state #change {
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-        color: black;
+        /* color: black; */
     }
 
     .change-state #change:hover {
-        background: rgba(0, 0, 0, 0.3);
-        color: white;
+        background: rgba(0, 0, 0, 0.07);
+        /* color: white; */
     }
 
     .chat-container,
@@ -412,7 +410,7 @@ a {
     }
 
     .footer {
-        left: 3px;
+        left: 5px;
         font-size: 10px;
     }
 
@@ -503,12 +501,11 @@ a {
     }
 
     .nav .close {
-        right: 230px;
+        right: 235px;
     }
 
-    .nav .close:hover,
-    .ticket-container .close:hover {
-        font-weight: bold;
+    .close img:hover {
+        transform: scale(1.3);
     }
 
     .nav-info {
@@ -642,7 +639,8 @@ a {
     }
 
     .ticket-container .close {
-        right: 300px;
+        top: 84px;
+        right: 290px;
     }
 
     .ticket-container,
