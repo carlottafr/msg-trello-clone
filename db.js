@@ -100,10 +100,10 @@ module.exports.addTicket = (project_id, creator, title) => {
         )
         .then(({ rows }) => {
             let ticketnumber;
-            if (rows[0].ticketnumber > 0) {
-                ticketnumber = rows[0].ticketnumber + 1;
-            } else {
+            if (!rows.length) {
                 ticketnumber = 1;
+            } else {
+                ticketnumber = rows[0].ticketnumber + 1;
             }
             return db.query(
                 `INSERT INTO tickets (project_id, creator, title, ticketnumber) 
