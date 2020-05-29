@@ -9,7 +9,9 @@ const compression = require("compression");
 const server = require("http").Server(app);
 // origins protects against attacks
 // 'localhost:8080 mysocialnetwork.herokuapp.com:*' for deployment
-const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io")(server, {
+    origins: "localhost:8080 stagetostage.herokuapp.com:*",
+});
 // io is an object
 const cookieSession = require("cookie-session");
 const db = require("./db");
@@ -356,7 +358,7 @@ app.get("*", function (req, res) {
     }
 });
 
-server.listen(8080, function () {
+server.listen(process.env.PORT || 8080, function () {
     console.log("I'm listening.");
 });
 
