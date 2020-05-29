@@ -445,6 +445,7 @@ a {
 
     .message-unit .avatar-wrapper .avatar {
         height: 60px;
+        width: 60px;
         grid-column: 1 / 2;
     }
 
