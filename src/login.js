@@ -16,7 +16,7 @@ export default function Login() {
                 {error && error.noMail && (
                     <div>This email has not been registered yet!</div>
                 )}
-                {error && !error.success && (
+                {error && !error.noMail && !error.success && (
                     <div>Email or password is incorrect!</div>
                 )}
                 <input name="email" type="email" placeholder="Email" />
