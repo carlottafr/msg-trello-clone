@@ -286,7 +286,7 @@ app.post("/invite-member", async (req, res) => {
             let subject = `Invitation to work on ${projectName}`;
             let text = `Hello, 
             you have been invited to work on ${projectName}. 
-            Go to <a href="http://localhost:8080/welcome#/project${projectCode}" 
+            Go to <a href="https://stagetostage.herokuapp.com/welcome#/project${projectCode}" 
             target="_blank">this link</a> to register for the project board.`;
             s3.sendEmail(to, subject, text)
                 .then(() => {
