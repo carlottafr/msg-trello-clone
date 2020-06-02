@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProject, addTicket } from "./actions";
+import { getProject, addTicket, changeStage } from "./actions";
 import Footer from "./footer";
 import Logo from "./logo";
 import setStage from "./stage";
@@ -34,6 +34,22 @@ export default function Board() {
         }
     };
 
+    const dragStart = (e, id) => {
+        // console.log("This ticket is being dragged: ", id);
+        e.dataTransfer.setData("ticketId", id);
+    };
+
+    const dragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const dropTicket = (e, stage) => {
+        let id = e.dataTransfer.getData("ticketId");
+        // console.log("This is the id of the dropped ticket: ", id);
+        // console.log("The item fell into this column: ", stage);
+        dispatch(changeStage(id, stage));
+    };
+
     const inviteTeamMember = async (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -62,7 +78,12 @@ export default function Board() {
 
         return (
             <div className="stage-column">
-                <div className="stage-inner-container">
+                <div
+                    className="stage-inner-container"
+                    id={num}
+                    onDragOver={(e) => dragOver(e)}
+                    onDrop={(e) => dropTicket(e, num)}
+                >
                     <div className="stage-title">{stage}</div>
                     {stageColumn && !stageColumn.length && (
                         <div className="no-ticket">
@@ -71,7 +92,13 @@ export default function Board() {
                     )}
                     {stageColumn &&
                         stageColumn.map((ticket) => (
-                            <div key={ticket.id} className="ticket">
+                            <div
+                                key={ticket.id}
+                                id={ticket.id}
+                                className="ticket"
+                                draggable
+                                onDragStart={(e) => dragStart(e, ticket.id)}
+                            >
                                 <Link to={"/ticket/" + ticket.id}>
                                     <div className="ticket-title">
                                         #{ticket.ticketnumber} {ticket.title}
