@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { socket } from "./socket";
 import { getProject, addTicket, changeStage } from "./actions";
 import Footer from "./footer";
 import Logo from "./logo";
@@ -44,10 +45,14 @@ export default function Board() {
     };
 
     const dropTicket = (e, stage) => {
-        let id = e.dataTransfer.getData("ticketId");
-        // console.log("This is the id of the dropped ticket: ", id);
+        let ticketId = e.dataTransfer.getData("ticketId");
+        // console.log("This is the id of the dropped ticket: ", ticketId);
         // console.log("The item fell into this column: ", stage);
-        dispatch(changeStage(id, stage));
+        dispatch(changeStage(ticketId, stage));
+        socket.emit("newMessage", {
+            ticketId,
+            msg: `changed the ticket stage to ${setStage(stage)}.`,
+        });
     };
 
     const inviteTeamMember = async (e) => {
