@@ -4,7 +4,6 @@
 
 body {
     background: #fff;
-    overflow: hidden;
 }
 
 body,
@@ -27,7 +26,9 @@ a {
     background: #f0f6ff;
 }
 
-.add .open {
+.add .open,
+.nav-info .logout,
+.welcome-container a {
     text-decoration: underline;
 }
 
@@ -39,6 +40,22 @@ a {
 .change-state :last-child {
     background: #fb8f67;
     color: white;
+}
+
+.add-sth button,
+.change-state :last-child,
+.change-state #change:hover,
+.chat-container,
+.inputlabel,
+.message-unit .msg-info-wrapper,
+.project-name,
+.stage-container div,
+.ticket-inner-container .open,
+.upload,
+.upload-btn,
+.welcome-content,
+.welcome-content button {
+    border-radius: 10px;
 }
 
 .add-sth button,
@@ -95,6 +112,14 @@ a {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+}
+
+.data input {
+    transition: all 0.2s ease-in;
+}
+
+.data input:focus {
+    transform: scale(1.1);
 }
 
 .error,
@@ -202,14 +227,8 @@ a {
 }
 
 .ticket-container,
-.upload {
-    /* background: rgb(242, 226, 255);
-    background: linear-gradient(
-        163deg,
-        rgba(242, 226, 255, 1) 0%,
-        rgba(242, 226, 255, 1) 50%,
-        rgba(255, 250, 231, 1) 100%
-    ); */
+.upload,
+.welcome-container {
     background: rgb(253, 127, 151);
     background: linear-gradient(
         142deg,
@@ -217,6 +236,10 @@ a {
         rgba(255, 216, 223, 1) 50%,
         rgba(225, 237, 255, 1) 100%
     );
+}
+
+.ticket-container,
+.upload {
     margin: 0 auto;
 }
 
@@ -227,20 +250,6 @@ a {
 }
 
 .welcome-container {
-    background: rgb(253, 127, 151);
-    background: linear-gradient(
-        142deg,
-        rgba(253, 127, 151, 1) 0%,
-        rgba(255, 216, 223, 1) 50%,
-        rgba(225, 237, 255, 1) 100%
-    );
-    /* background: rgb(176, 252, 246);
-    background: linear-gradient(
-        135deg,
-        rgba(176, 252, 246, 1) 0%,
-        rgba(221, 255, 252, 1) 50%,
-        rgba(255, 252, 241, 1) 100%
-    ); */
     height: 100vh;
 }
 
@@ -257,6 +266,65 @@ a {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 414px) {
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        margin: 5px;
+    }
+
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        padding: 10px;
+    }
+
+    .data {
+        width: 70%;
+    }
+
+    .data input {
+        text-align: center;
+    }
+
+    .logo {
+        margin-right: 20px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .registration h2 {
+        font-size: 22px;
+        margin: 10px;
+    }
+
+    .welcome-container,
+    .welcome-content {
+        padding: 30px;
+    }
+
+    .welcome-content {
+        height: 80%;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .welcome-content button {
+        margin: 10px 0 10px 0;
+        padding: 10px;
+    }
+
+    .welcome-content h1 {
+        font-size: 26px;
+    }
+
+    .welcome-content .logo img {
+        height: 100px;
+    }
 }
 
 @media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
@@ -310,22 +378,6 @@ a {
         padding: 10px;
     }
 
-    .add-sth button,
-    .change-state :last-child,
-    .change-state #change:hover,
-    .chat-container,
-    .inputlabel,
-    .message-unit .msg-info-wrapper,
-    .project-name,
-    .stage-container div,
-    .ticket-inner-container .open,
-    .upload,
-    .upload-btn,
-    .welcome-content,
-    .welcome-content button {
-        border-radius: 10px;
-    }
-
     .add-sth input {
         width: 300px;
     }
@@ -359,6 +411,7 @@ a {
         /* margin-top: 20px; */
         width: 1150px;
         margin-left: 50px;
+        overflow: hidden;
         /* padding: 10px; */
     }
 
@@ -518,7 +571,6 @@ a {
     }
 
     .nav-info .logout {
-        text-decoration: underline;
         font-size: 14px;
         font-weight: lighter;
         margin: 30px;
@@ -689,10 +741,6 @@ a {
 
     .welcome-container {
         padding: 30px;
-    }
-
-    .welcome-container a {
-        text-decoration: underline;
     }
 
     .welcome-content {

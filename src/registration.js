@@ -37,7 +37,7 @@ export default function Registration() {
                 </div>
                 <HashRouter>
                     <div id="addon">
-                        You already have an account?{" "}
+                        You already have an account? <br />
                         <Link to="/login">Log in here!</Link>
                     </div>
                 </HashRouter>
