@@ -17,7 +17,7 @@ const ses = new aws.SES({
 exports.sendEmail = (to, subject, text) => {
     return ses
         .sendEmail({
-            Source: "West Chicory <west.chicory@spicedling.email>",
+            Source: "Carlotta Frommer <carlotta.frommer@outlook.de>",
             Destination: {
                 ToAddresses: [to],
             },
@@ -51,7 +51,7 @@ exports.upload = (req, res, next) => {
         .putObject({
             // ^ PUT request for file (Object)
             // v info on the file
-            Bucket: "spicedling",
+            Bucket: "progcf",
             ACL: "public-read",
             Key: filename,
             Body: fs.createReadStream(path),

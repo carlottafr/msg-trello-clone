@@ -32,6 +32,10 @@ a {
     text-decoration: underline;
 }
 
+.add .open img {
+    opacity: 0.5;
+}
+
 .add-sth button {
     border: none;
 }
@@ -87,11 +91,6 @@ a {
     background: #fd7f97;
 }
 
-/* .body {
-    background: #ffdef2;
-    background: rgba(255, 222, 242, 0.5);
-} */
-
 .change-state div,
 .close,
 .inputlabel,
@@ -103,6 +102,19 @@ a {
     cursor: pointer;
 }
 
+.change-state #change,
+.close img,
+.data input,
+.ticket {
+    transition: all 0.2s ease-in;
+}
+
+.change-state #change:hover,
+.data input:focus,
+.ticket:hover {
+    transform: scale(1.1);
+}
+
 .chat-inner-container,
 .ticket-inner-container {
     overflow-y: scroll;
@@ -112,14 +124,6 @@ a {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-}
-
-.data input {
-    transition: all 0.2s ease-in;
-}
-
-.data input:focus {
-    transform: scale(1.1);
 }
 
 .error,
@@ -269,6 +273,14 @@ a {
 }
 
 @media screen and (min-device-width: 320px) and (max-device-width: 414px) {
+    .add {
+        text-align: center;
+    }
+
+    .add .open img {
+        height: 50px;
+    }
+
     .add-sth .open,
     .add-sth input,
     .data input {
@@ -279,6 +291,11 @@ a {
     .add-sth input,
     .data input {
         padding: 10px;
+    }
+
+    .board {
+        width: 90%;
+        margin: 10%;
     }
 
     .data {
@@ -294,7 +311,13 @@ a {
     }
 
     .logo img {
-        height: 50px;
+        height: 30px;
+        margin: 5px;
+    }
+
+    .project-name h1 {
+        text-align: center;
+        margin-left: 10%;
     }
 
     .registration h2 {
@@ -356,20 +379,10 @@ a {
 
     .add .open img {
         opacity: 0.5;
-    }
-
-    .add .open img,
-    .change-state #change,
-    .close img,
-    .data input,
-    .ticket {
         transition: all 0.2s ease-in;
     }
 
-    .add .open img:hover,
-    .change-state #change:hover,
-    .data input:focus,
-    .ticket:hover {
+    .add .open img:hover {
         transform: scale(1.1);
     }
 
