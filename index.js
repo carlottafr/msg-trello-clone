@@ -274,7 +274,6 @@ app.post("/invite-member", async (req, res) => {
     try {
         const data = await db.checkIfMember(req.session.user.projectId, email);
         if (data.rows.length > 0) {
-            console.log("alreadyMember data: ", data.rows.length);
             res.json({ alreadyMember: true });
         } else {
             const { rows } = await db.getProjectInfo(

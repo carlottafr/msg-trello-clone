@@ -14,7 +14,6 @@ export const init = (store) => {
         );
 
         socket.on("ticketMessage", (msg) => {
-            console.log("This is the msg to be handled by redux: ", msg);
             store.dispatch(ticketMessage(msg));
         });
     }

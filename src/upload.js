@@ -9,12 +9,12 @@ export default function Upload() {
     return (
         <div className="modal">
             <div className="upload">
-                <p
+                <div
                     className="close"
                     onClick={() => dispatch(toggleUpload(false))}
                 >
-                    Close
-                </p>
+                    <img src="/close.png" />
+                </div>
                 <div className="upload-buttons">
                     <input
                         onChange={({ target }) => {
