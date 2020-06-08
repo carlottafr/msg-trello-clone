@@ -23,8 +23,7 @@ export default function Upload() {
                         name="file"
                         id="file"
                         type="file"
-                        accept="jpg/*"
-                        capture="filesystem"
+                        accept="image/x-png,image/jpeg"
                         className="inputfile"
                     />
                     <label htmlFor="file" className="inputlabel">
