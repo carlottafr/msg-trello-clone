@@ -24,7 +24,7 @@ export default function Upload() {
                         id="file"
                         type="file"
                         accept="jpg/*"
-                        capture="camera/filesystem"
+                        capture="filesystem"
                         className="inputfile"
                     />
                     <label htmlFor="file" className="inputlabel">
