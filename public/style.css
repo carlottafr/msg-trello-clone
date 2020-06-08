@@ -27,9 +27,9 @@ a {
 
 .add {
     box-shadow: 0 4px 4px -4px gray;
+    border-radius: 20px 20px 0 0;
 }
 
-.add,
 .board,
 .body {
     border-radius: 30px 30px 0 0;
@@ -331,7 +331,7 @@ a {
     right: 10px;
 }
 
-@media screen and (min-device-width: 320px) and (max-device-width: 414px) {
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
     .add {
         text-align: center;
         padding: 10px;
@@ -520,7 +520,200 @@ a {
     }
 }
 
-@media screen and (min-device-width: 1024px) and (max-device-width: 1600px) {
+@media screen and (min-device-width: 560px) and (max-device-width: 1024px) {
+    .add {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .add .open img {
+        height: 50px;
+    }
+
+    .add-sth button {
+        width: 40%;
+        padding: 5px;
+        margin: 0 auto;
+    }
+
+    .add-sth div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        margin: 5px;
+    }
+
+    .add-sth .open,
+    .add-sth input,
+    .data input {
+        padding: 10px;
+    }
+
+    .board {
+        width: 90%;
+        margin: 5%;
+    }
+
+    .body {
+        width: 100%;
+    }
+
+    .chat-container textarea {
+        height: 40px;
+    }
+
+    .chat-inner-container {
+        height: 400px;
+    }
+
+    .data {
+        width: 70%;
+    }
+
+    .data input {
+        text-align: center;
+    }
+
+    .footer {
+        opacity: 0;
+    }
+
+    .inputlabel,
+    .upload-btn {
+        padding: 15px;
+        width: 54px;
+        margin: 30px;
+    }
+
+    .logo {
+        margin-right: 20px;
+    }
+
+    .logo img {
+        height: 70px;
+        margin: 5px;
+    }
+
+    .nav {
+        width: 25%;
+        padding: 3%;
+        -webkit-animation: fadein 1s;
+        animation: fadein 1s;
+        z-index: 3;
+    }
+
+    .nav div {
+        margin: 10px;
+        text-align: center;
+    }
+
+    .nav .avatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .nav .close {
+        text-align: left !important;
+        margin: 0 0 10px 10px;
+    }
+
+    .nr-msgs {
+        grid-template-columns: 1fr 35px;
+    }
+
+    .nr-msgs img {
+        width: 20px;
+    }
+
+    .nr-msgs img,
+    .nr-msgs p#msg-nr {
+        grid-row: 1;
+        grid-column: 2 / 3;
+        margin: 10px 0 20px 0 !important;
+    }
+
+    .project-name h1 {
+        text-align: center;
+    }
+
+    .registration h2 {
+        font-size: 22px;
+        margin: 10px;
+    }
+
+    .stage-container,
+    .stage-inner-container {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .ticket-container,
+    .ticket-inner-container {
+        width: 90%;
+        height: 93%;
+        padding: 5%;
+    }
+
+    .ticket-created {
+        font-size: 14px;
+    }
+
+    .ticket-info h2,
+    .ticket-info div {
+        margin: 10px 0 10px 0;
+    }
+
+    .change-state :last-child,
+    .ticket-info .open {
+        width: 40%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .upload {
+        height: 150px;
+        width: 200px;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 20px;
+    }
+
+    .upload-buttons {
+        margin: 15px 0px 0px 30px;
+    }
+
+    .welcome-container,
+    .welcome-content {
+        padding: 30px;
+    }
+
+    .welcome-content {
+        height: 87%;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .welcome-content button {
+        margin: 10px 0 10px 0;
+        padding: 10px;
+    }
+
+    .welcome-content h1 {
+        font-size: 26px;
+    }
+
+    .welcome-content .logo img {
+        height: 100px;
+    }
+}
+
+@media screen and (min-device-width: 1280px) and (max-device-width: 1600px) {
     .add {
         width: 1097px;
         margin-left: 0px !important;
