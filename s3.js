@@ -11,7 +11,7 @@ if (process.env.NODE_ENV == "production") {
 const ses = new aws.SES({
     accessKeyId: secrets.AWS_KEY,
     secretAccessKey: secrets.AWS_SECRET,
-    region: "eu-west-1",
+    region: "eu-central-1",
 });
 
 exports.sendEmail = (to, subject, text) => {
