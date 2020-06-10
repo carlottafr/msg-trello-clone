@@ -5,7 +5,7 @@
 <ul>
   <li>Create a project board</li>  
   <li>Add tickets</li>
-  <li>Invite more users via email</li>
+  <li>Invite more users via email <strong>(not working right now)</strong></li>
   <li>Change project stage via drag & drop</li>
   <li>Change project stage directly in the ticket</li>
   <li>Chat with other users in the ticket</li>
