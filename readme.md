@@ -1,5 +1,5 @@
 <h1>Stage to Stage - A Project Management App</h1>
-<img src="http://carlottafrommer.com/wp-content/uploads/2020/06/sts-rm-1024x454.gif" />
+<img src="http://carlottafrommer.com/files/sts.mp4" />
 
 <ul>
   <li>Create a project board</li>  
