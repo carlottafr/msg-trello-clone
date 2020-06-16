@@ -1,5 +1,5 @@
 <h1>Stage to Stage - A Project Management App</h1>
-<img src="http://carlottafrommer.com/files/sts.mp4" />
+<video control src="http://carlottafrommer.com/files/sts.mp4" width="300"></video>
 
 <ul>
   <li>Create a project board</li>  
