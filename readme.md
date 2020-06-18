@@ -1,10 +1,7 @@
 <h1>Stage to Stage - A Project Management App</h1>
-<<<<<<< HEAD
 <a href="http://carlottafrommer.com/files/sts.mp4" target="_blank"><img src="/sts.png" width="300" />
 <p>Click the screenshot or here to get a preview of the app!</p></a>
-=======
 <video control src="http://carlottafrommer.com/files/sts.mp4" width="300"></video>
->>>>>>> 0dacad4084ae6eeb1ccc3d52ad6b6092da676c61
 
 <ul>
   <li>Create a project board</li>  
