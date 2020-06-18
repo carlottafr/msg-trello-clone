@@ -1,5 +1,5 @@
 <h1>Stage to Stage - A Project Management App</h1>
-<a href="http://carlottafrommer.com/files/sts.mp4" target="_blank"><img src="/sts.png" width="300" />
+<a href="http://carlottafrommer.com/files/sts.mp4" target="_blank"><img src="/public/sts.png" width="300" />
 <p>Click the screenshot or here to get a preview of the app!</p></a>
 <video control src="http://carlottafrommer.com/files/sts.mp4" width="300"></video>
 
