@@ -1,7 +1,6 @@
-<h1>Stage to Stage - A Project Management App</h1>
+<h1><a href="https://stagetostage.herokuapp.com/" alt="Stage to Stage" title="Stage to Stage" target="_blank">Stage to Stage - A Project Management App</a></h1>
 <a href="http://carlottafrommer.com/files/sts.mp4" target="_blank"><img src="/public/sts.png" width="300" />
 <p>Click the screenshot or here to get a preview of the app!</p></a>
-<video control src="http://carlottafrommer.com/files/sts.mp4" width="300"></video>
 
 <ul>
   <li>Create a project board</li>  
